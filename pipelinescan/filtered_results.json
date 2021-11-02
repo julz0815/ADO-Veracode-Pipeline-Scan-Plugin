@@ -1,0 +1,718 @@
+{
+  "_links": {
+    "root": {
+      "href": "/"
+    },
+    "self": {
+      "href": "/scans/ca75a4bd-e2f3-4f76-b7fe-2a6bc4ca7b5e/findings"
+    },
+    "help": {
+      "href": "https://help.veracode.com/reader/tS9CaFwL4_lbIEWWomsJoA/ovfZGgu96UINQxIuTqRDwg"
+    }
+  },
+  "scan_id": "ca75a4bd-e2f3-4f76-b7fe-2a6bc4ca7b5e",
+  "scan_status": "SUCCESS",
+  "message": "Scan successful. Results size: 336668 bytes",
+  "modules": [
+    "verademo.war",
+    "JS files within verademo.war"
+  ],
+  "modules_count": 2,
+  "findings": [
+    {
+      "title": "java.lang.Runtime.exec",
+      "issue_id": 1244,
+      "gob": "B",
+      "severity": 5,
+      "issue_type_id": "taint",
+      "issue_type": "Improper Neutralization of Special Elements used in an OS Command (\u0027OS Command Injection\u0027)",
+      "cwe_id": "78",
+      "display_text": "\u003cspan\u003eThis call to java.lang.Runtime.exec() contains a command injection flaw.  The argument to the function is constructed using untrusted input.  If an attacker is allowed to specify all or part of the command, it may be possible to execute commands on the server with the privileges of the executing process.  The level of exposure depends on the effectiveness of input validation routines, if any. The first argument to exec() contains tainted data. The tainted data originated from an earlier call to AnnotationVirtualController.vc_annotation_entry.\u003c/span\u003e \u003cspan\u003eValidate all untrusted input to ensure that it conforms to the expected format, using centralized data validation routines when possible.  When using blocklists, be sure that the sanitizing routine performs a sufficient number of iterations to remove all instances of disallowed characters.  Most APIs that execute system commands also have a \"safe\" version of the method that takes an array of strings as input rather than a single string, which protects against some forms of command injection.\u003c/span\u003e \u003cspan\u003eReferences: \u003ca href\u003d\"https://cwe.mitre.org/data/definitions/78.html\"\u003eCWE\u003c/a\u003e \u003ca href\u003d\"https://www.owasp.org/index.php/Command_Injection\"\u003eOWASP\u003c/a\u003e \u003ca href\u003d\"https://webappsec.pbworks.com/OS-Commanding\"\u003eWASC\u003c/a\u003e\u003c/span\u003e",
+      "files": {
+        "source_file": {
+          "file": "com/veracode/verademo/controller/ToolsController.java",
+          "line": 56,
+          "function_name": "ping",
+          "qualified_function_name": "com.veracode.verademo.controller.ToolsController.ping",
+          "function_prototype": "java.lang.String ping(java.lang.String)",
+          "scope": "com.veracode.verademo.controller.ToolsController"
+        }
+      },
+      "flaw_match": {
+        "procedure_hash": "3149804519",
+        "prototype_hash": "2923252499",
+        "flaw_hash": "3051621651",
+        "flaw_hash_count": 1,
+        "flaw_hash_ordinal": 1,
+        "cause_hash": "221330682",
+        "cause_hash_count": 1,
+        "cause_hash_ordinal": 1,
+        "cause_hash2": "1487712924",
+        "cause_hash2_ordinal": "1"
+      },
+      "flaw_details_link": "https://downloads.veracode.com/securityscan/cwe/v4/java/78.html"
+    },
+    {
+      "title": "java.lang.Runtime.exec",
+      "issue_id": 1245,
+      "gob": "B",
+      "severity": 5,
+      "issue_type_id": "taint",
+      "issue_type": "Improper Neutralization of Special Elements used in an OS Command (\u0027OS Command Injection\u0027)",
+      "cwe_id": "78",
+      "display_text": "\u003cspan\u003eThis call to java.lang.Runtime.exec() contains a command injection flaw.  The argument to the function is constructed using untrusted input.  If an attacker is allowed to specify all or part of the command, it may be possible to execute commands on the server with the privileges of the executing process.  The level of exposure depends on the effectiveness of input validation routines, if any. The first argument to exec() contains tainted data. The tainted data originated from an earlier call to AnnotationVirtualController.vc_annotation_entry.\u003c/span\u003e \u003cspan\u003eValidate all untrusted input to ensure that it conforms to the expected format, using centralized data validation routines when possible.  When using blocklists, be sure that the sanitizing routine performs a sufficient number of iterations to remove all instances of disallowed characters.  Most APIs that execute system commands also have a \"safe\" version of the method that takes an array of strings as input rather than a single string, which protects against some forms of command injection.\u003c/span\u003e \u003cspan\u003eReferences: \u003ca href\u003d\"https://cwe.mitre.org/data/definitions/78.html\"\u003eCWE\u003c/a\u003e \u003ca href\u003d\"https://www.owasp.org/index.php/Command_Injection\"\u003eOWASP\u003c/a\u003e \u003ca href\u003d\"https://webappsec.pbworks.com/OS-Commanding\"\u003eWASC\u003c/a\u003e\u003c/span\u003e",
+      "files": {
+        "source_file": {
+          "file": "com/veracode/verademo/controller/ToolsController.java",
+          "line": 59,
+          "function_name": "ping",
+          "qualified_function_name": "com.veracode.verademo.controller.ToolsController.ping",
+          "function_prototype": "java.lang.String ping(java.lang.String)",
+          "scope": "com.veracode.verademo.controller.ToolsController"
+        }
+      },
+      "flaw_match": {
+        "procedure_hash": "3149804519",
+        "prototype_hash": "2923252499",
+        "flaw_hash": "1314945025",
+        "flaw_hash_count": 1,
+        "flaw_hash_ordinal": 1,
+        "cause_hash": "3320331067",
+        "cause_hash_count": 1,
+        "cause_hash_ordinal": 1,
+        "cause_hash2": "1835631409",
+        "cause_hash2_ordinal": "1"
+      },
+      "flaw_details_link": "https://downloads.veracode.com/securityscan/cwe/v4/java/78.html"
+    },
+    {
+      "title": "java.lang.Runtime.exec",
+      "issue_id": 1246,
+      "gob": "B",
+      "severity": 5,
+      "issue_type_id": "taint",
+      "issue_type": "Improper Neutralization of Special Elements used in an OS Command (\u0027OS Command Injection\u0027)",
+      "cwe_id": "78",
+      "display_text": "\u003cspan\u003eThis call to java.lang.Runtime.exec() contains a command injection flaw.  The argument to the function is constructed using untrusted input.  If an attacker is allowed to specify all or part of the command, it may be possible to execute commands on the server with the privileges of the executing process.  The level of exposure depends on the effectiveness of input validation routines, if any. The first argument to exec() contains tainted data from the variables (new String\\[...\\]). The tainted data originated from an earlier call to AnnotationVirtualController.vc_annotation_entry.\u003c/span\u003e \u003cspan\u003eValidate all untrusted input to ensure that it conforms to the expected format, using centralized data validation routines when possible.  When using blocklists, be sure that the sanitizing routine performs a sufficient number of iterations to remove all instances of disallowed characters.  Most APIs that execute system commands also have a \"safe\" version of the method that takes an array of strings as input rather than a single string, which protects against some forms of command injection.\u003c/span\u003e \u003cspan\u003eReferences: \u003ca href\u003d\"https://cwe.mitre.org/data/definitions/78.html\"\u003eCWE\u003c/a\u003e \u003ca href\u003d\"https://www.owasp.org/index.php/Command_Injection\"\u003eOWASP\u003c/a\u003e \u003ca href\u003d\"https://webappsec.pbworks.com/OS-Commanding\"\u003eWASC\u003c/a\u003e\u003c/span\u003e",
+      "files": {
+        "source_file": {
+          "file": "com/veracode/verademo/controller/ToolsController.java",
+          "line": 91,
+          "function_name": "fortune",
+          "qualified_function_name": "com.veracode.verademo.controller.ToolsController.fortune",
+          "function_prototype": "java.lang.String fortune(java.lang.String)",
+          "scope": "com.veracode.verademo.controller.ToolsController"
+        }
+      },
+      "flaw_match": {
+        "procedure_hash": "2161030689",
+        "prototype_hash": "3827778930",
+        "flaw_hash": "3753823106",
+        "flaw_hash_count": 1,
+        "flaw_hash_ordinal": 1,
+        "cause_hash": "4165693487",
+        "cause_hash_count": 1,
+        "cause_hash_ordinal": 1,
+        "cause_hash2": "3322588175",
+        "cause_hash2_ordinal": "1"
+      },
+      "flaw_details_link": "https://downloads.veracode.com/securityscan/cwe/v4/java/78.html"
+    },
+    {
+      "title": "java.lang.Runtime.exec",
+      "issue_id": 1243,
+      "gob": "B",
+      "severity": 5,
+      "issue_type_id": "taint",
+      "issue_type": "Improper Neutralization of Special Elements used in an OS Command (\u0027OS Command Injection\u0027)",
+      "cwe_id": "78",
+      "display_text": "\u003cspan\u003eThis call to java.lang.Runtime.exec() contains a command injection flaw.  The argument to the function is constructed using untrusted input.  If an attacker is allowed to specify all or part of the command, it may be possible to execute commands on the server with the privileges of the executing process.  The level of exposure depends on the effectiveness of input validation routines, if any. The first argument to exec() contains tainted data from the variable cmd. The tainted data originated from an earlier call to AnnotationVirtualController.vc_annotation_entry.\u003c/span\u003e \u003cspan\u003eValidate all untrusted input to ensure that it conforms to the expected format, using centralized data validation routines when possible.  When using blocklists, be sure that the sanitizing routine performs a sufficient number of iterations to remove all instances of disallowed characters.  Most APIs that execute system commands also have a \"safe\" version of the method that takes an array of strings as input rather than a single string, which protects against some forms of command injection.\u003c/span\u003e \u003cspan\u003eReferences: \u003ca href\u003d\"https://cwe.mitre.org/data/definitions/78.html\"\u003eCWE\u003c/a\u003e \u003ca href\u003d\"https://www.owasp.org/index.php/Command_Injection\"\u003eOWASP\u003c/a\u003e \u003ca href\u003d\"https://webappsec.pbworks.com/OS-Commanding\"\u003eWASC\u003c/a\u003e\u003c/span\u003e",
+      "files": {
+        "source_file": {
+          "file": "com/veracode/verademo/controller/ToolsController.java",
+          "line": 94,
+          "function_name": "fortune",
+          "qualified_function_name": "com.veracode.verademo.controller.ToolsController.fortune",
+          "function_prototype": "java.lang.String fortune(java.lang.String)",
+          "scope": "com.veracode.verademo.controller.ToolsController"
+        }
+      },
+      "flaw_match": {
+        "procedure_hash": "2161030689",
+        "prototype_hash": "3827778930",
+        "flaw_hash": "3707028537",
+        "flaw_hash_count": 1,
+        "flaw_hash_ordinal": 1,
+        "cause_hash": "2620704574",
+        "cause_hash_count": 1,
+        "cause_hash_ordinal": 1,
+        "cause_hash2": "1522093433",
+        "cause_hash2_ordinal": "5"
+      },
+      "flaw_details_link": "https://downloads.veracode.com/securityscan/cwe/v4/java/78.html"
+    },
+    {
+      "title": "java.sql.Statement.executeQuery",
+      "issue_id": 1015,
+      "gob": "B",
+      "severity": 4,
+      "issue_type_id": "taint",
+      "issue_type": "Improper Neutralization of Special Elements used in an SQL Command (\u0027SQL Injection\u0027)",
+      "cwe_id": "89",
+      "display_text": "\u003cspan\u003eThis database query contains a SQL injection flaw.  The call to java.sql.Statement.executeQuery() constructs a dynamic SQL query using a variable derived from untrusted input.  An attacker could exploit this flaw to execute arbitrary SQL queries against the database. The first argument to executeQuery() contains tainted data from the variable sqlQuery. The tainted data originated from an earlier call to AnnotationVirtualController.vc_annotation_entry.\u003c/span\u003e \u003cspan\u003eAvoid dynamically constructing SQL queries.  Instead, use parameterized prepared statements to prevent the database from interpreting the contents of bind variables as part of the query.  Always validate untrusted input to ensure that it conforms to the expected format, using centralized data validation routines when possible.\u003c/span\u003e \u003cspan\u003eReferences: \u003ca href\u003d\"https://cwe.mitre.org/data/definitions/89.html\"\u003eCWE\u003c/a\u003e \u003ca href\u003d\"https://www.owasp.org/index.php/SQL_injection\"\u003eOWASP\u003c/a\u003e \u003ca href\u003d\"https://webappsec.pbworks.com/SQL-Injection\"\u003eWASC\u003c/a\u003e\u003c/span\u003e",
+      "files": {
+        "source_file": {
+          "file": "com/veracode/verademo/controller/UserController.java",
+          "line": 166,
+          "function_name": "processLogin",
+          "qualified_function_name": "com.veracode.verademo.controller.UserController.processLogin",
+          "function_prototype": "java.lang.String processLogin(java.lang.String, java.lang.String, java.lang.String, java.lang.String, org.springframework.ui.Model, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)",
+          "scope": "com.veracode.verademo.controller.UserController"
+        }
+      },
+      "flaw_match": {
+        "procedure_hash": "1665904725",
+        "prototype_hash": "839857025",
+        "flaw_hash": "3392777041",
+        "flaw_hash_count": 1,
+        "flaw_hash_ordinal": 1,
+        "cause_hash": "1176028798",
+        "cause_hash_count": 1,
+        "cause_hash_ordinal": 1,
+        "cause_hash2": "1522093433",
+        "cause_hash2_ordinal": "5"
+      },
+      "flaw_details_link": "https://downloads.veracode.com/securityscan/cwe/v4/java/89.html"
+    },
+    {
+      "title": "java.sql.Statement.executeQuery",
+      "issue_id": 1017,
+      "gob": "B",
+      "severity": 4,
+      "issue_type_id": "taint",
+      "issue_type": "Improper Neutralization of Special Elements used in an SQL Command (\u0027SQL Injection\u0027)",
+      "cwe_id": "89",
+      "display_text": "\u003cspan\u003eThis database query contains a SQL injection flaw.  The call to java.sql.Statement.executeQuery() constructs a dynamic SQL query using a variable derived from untrusted input.  An attacker could exploit this flaw to execute arbitrary SQL queries against the database. The first argument to executeQuery() contains tainted data from the variable sql. The tainted data originated from an earlier call to AnnotationVirtualController.vc_annotation_entry.\u003c/span\u003e \u003cspan\u003eAvoid dynamically constructing SQL queries.  Instead, use parameterized prepared statements to prevent the database from interpreting the contents of bind variables as part of the query.  Always validate untrusted input to ensure that it conforms to the expected format, using centralized data validation routines when possible.\u003c/span\u003e \u003cspan\u003eReferences: \u003ca href\u003d\"https://cwe.mitre.org/data/definitions/89.html\"\u003eCWE\u003c/a\u003e \u003ca href\u003d\"https://www.owasp.org/index.php/SQL_injection\"\u003eOWASP\u003c/a\u003e \u003ca href\u003d\"https://webappsec.pbworks.com/SQL-Injection\"\u003eWASC\u003c/a\u003e\u003c/span\u003e",
+      "files": {
+        "source_file": {
+          "file": "com/veracode/verademo/controller/UserController.java",
+          "line": 251,
+          "function_name": "showPasswordHint",
+          "qualified_function_name": "com.veracode.verademo.controller.UserController.showPasswordHint",
+          "function_prototype": "java.lang.String showPasswordHint(java.lang.String)",
+          "scope": "com.veracode.verademo.controller.UserController"
+        }
+      },
+      "flaw_match": {
+        "procedure_hash": "14368270",
+        "prototype_hash": "649289062",
+        "flaw_hash": "3392777041",
+        "flaw_hash_count": 1,
+        "flaw_hash_ordinal": 1,
+        "cause_hash": "1176028798",
+        "cause_hash_count": 1,
+        "cause_hash_ordinal": 1,
+        "cause_hash2": "1522093433",
+        "cause_hash2_ordinal": "5"
+      },
+      "flaw_details_link": "https://downloads.veracode.com/securityscan/cwe/v4/java/89.html"
+    },
+    {
+      "title": "java.sql.Statement.executeQuery",
+      "issue_id": 1016,
+      "gob": "B",
+      "severity": 4,
+      "issue_type_id": "taint",
+      "issue_type": "Improper Neutralization of Special Elements used in an SQL Command (\u0027SQL Injection\u0027)",
+      "cwe_id": "89",
+      "display_text": "\u003cspan\u003eThis database query contains a SQL injection flaw.  The call to java.sql.Statement.executeQuery() constructs a dynamic SQL query using a variable derived from untrusted input.  An attacker could exploit this flaw to execute arbitrary SQL queries against the database. The first argument to executeQuery() contains tainted data from the variable sql. The tainted data originated from an earlier call to AnnotationVirtualController.vc_annotation_entry.\u003c/span\u003e \u003cspan\u003eAvoid dynamically constructing SQL queries.  Instead, use parameterized prepared statements to prevent the database from interpreting the contents of bind variables as part of the query.  Always validate untrusted input to ensure that it conforms to the expected format, using centralized data validation routines when possible.\u003c/span\u003e \u003cspan\u003eReferences: \u003ca href\u003d\"https://cwe.mitre.org/data/definitions/89.html\"\u003eCWE\u003c/a\u003e \u003ca href\u003d\"https://www.owasp.org/index.php/SQL_injection\"\u003eOWASP\u003c/a\u003e \u003ca href\u003d\"https://webappsec.pbworks.com/SQL-Injection\"\u003eWASC\u003c/a\u003e\u003c/span\u003e",
+      "files": {
+        "source_file": {
+          "file": "com/veracode/verademo/controller/UserController.java",
+          "line": 316,
+          "function_name": "processRegister",
+          "qualified_function_name": "com.veracode.verademo.controller.UserController.processRegister",
+          "function_prototype": "java.lang.String processRegister(java.lang.String, javax.servlet.http.HttpServletRequest, org.springframework.ui.Model)",
+          "scope": "com.veracode.verademo.controller.UserController"
+        }
+      },
+      "flaw_match": {
+        "procedure_hash": "3365427062",
+        "prototype_hash": "2646652268",
+        "flaw_hash": "3392777041",
+        "flaw_hash_count": 1,
+        "flaw_hash_ordinal": 1,
+        "cause_hash": "1176028798",
+        "cause_hash_count": 1,
+        "cause_hash_ordinal": 1,
+        "cause_hash2": "1522093433",
+        "cause_hash2_ordinal": "5"
+      },
+      "flaw_details_link": "https://downloads.veracode.com/securityscan/cwe/v4/java/89.html"
+    },
+    {
+      "title": "java.sql.Statement.execute",
+      "issue_id": 1010,
+      "gob": "B",
+      "severity": 4,
+      "issue_type_id": "taint",
+      "issue_type": "Improper Neutralization of Special Elements used in an SQL Command (\u0027SQL Injection\u0027)",
+      "cwe_id": "89",
+      "display_text": "\u003cspan\u003eThis database query contains a SQL injection flaw.  The call to java.sql.Statement.execute() constructs a dynamic SQL query using a variable derived from untrusted input.  An attacker could exploit this flaw to execute arbitrary SQL queries against the database. The first argument to execute() contains tainted data from the variable query. The tainted data originated from earlier calls to AnnotationVirtualController.vc_annotation_entry, and java.sql.Statement.executeQuery.\u003c/span\u003e \u003cspan\u003eAvoid dynamically constructing SQL queries.  Instead, use parameterized prepared statements to prevent the database from interpreting the contents of bind variables as part of the query.  Always validate untrusted input to ensure that it conforms to the expected format, using centralized data validation routines when possible.\u003c/span\u003e \u003cspan\u003eReferences: \u003ca href\u003d\"https://cwe.mitre.org/data/definitions/89.html\"\u003eCWE\u003c/a\u003e \u003ca href\u003d\"https://www.owasp.org/index.php/SQL_injection\"\u003eOWASP\u003c/a\u003e \u003ca href\u003d\"https://webappsec.pbworks.com/SQL-Injection\"\u003eWASC\u003c/a\u003e\u003c/span\u003e",
+      "files": {
+        "source_file": {
+          "file": "com/veracode/verademo/controller/UserController.java",
+          "line": 384,
+          "function_name": "processRegisterFinish",
+          "qualified_function_name": "com.veracode.verademo.controller.UserController.processRegisterFinish",
+          "function_prototype": "java.lang.String processRegisterFinish(java.lang.String, java.lang.String, java.lang.String, java.lang.String, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, org.springframework.ui.Model)",
+          "scope": "com.veracode.verademo.controller.UserController"
+        }
+      },
+      "flaw_match": {
+        "procedure_hash": "1551041351",
+        "prototype_hash": "992078440",
+        "flaw_hash": "3765405848",
+        "flaw_hash_count": 2,
+        "flaw_hash_ordinal": 1,
+        "cause_hash": "153293750",
+        "cause_hash_count": 1,
+        "cause_hash_ordinal": 1,
+        "cause_hash2": "2866949028",
+        "cause_hash2_ordinal": "1"
+      },
+      "flaw_details_link": "https://downloads.veracode.com/securityscan/cwe/v4/java/89.html"
+    },
+    {
+      "title": "java.sql.Statement.executeQuery",
+      "issue_id": 1018,
+      "gob": "B",
+      "severity": 4,
+      "issue_type_id": "taint",
+      "issue_type": "Improper Neutralization of Special Elements used in an SQL Command (\u0027SQL Injection\u0027)",
+      "cwe_id": "89",
+      "display_text": "\u003cspan\u003eThis database query contains a SQL injection flaw.  The call to java.sql.Statement.executeQuery() constructs a dynamic SQL query using a variable derived from untrusted input.  An attacker could exploit this flaw to execute arbitrary SQL queries against the database. The first argument to executeQuery() contains tainted data from the variable sqlMyEvents. The tainted data originated from earlier calls to AnnotationVirtualController.vc_annotation_entry, and java.sql.Statement.executeQuery.\u003c/span\u003e \u003cspan\u003eAvoid dynamically constructing SQL queries.  Instead, use parameterized prepared statements to prevent the database from interpreting the contents of bind variables as part of the query.  Always validate untrusted input to ensure that it conforms to the expected format, using centralized data validation routines when possible.\u003c/span\u003e \u003cspan\u003eReferences: \u003ca href\u003d\"https://cwe.mitre.org/data/definitions/89.html\"\u003eCWE\u003c/a\u003e \u003ca href\u003d\"https://www.owasp.org/index.php/SQL_injection\"\u003eOWASP\u003c/a\u003e \u003ca href\u003d\"https://webappsec.pbworks.com/SQL-Injection\"\u003eWASC\u003c/a\u003e\u003c/span\u003e",
+      "files": {
+        "source_file": {
+          "file": "com/veracode/verademo/controller/UserController.java",
+          "line": 495,
+          "function_name": "showProfile",
+          "qualified_function_name": "com.veracode.verademo.controller.UserController.showProfile",
+          "function_prototype": "java.lang.String showProfile(java.lang.String, org.springframework.ui.Model, javax.servlet.http.HttpServletRequest)",
+          "scope": "com.veracode.verademo.controller.UserController"
+        }
+      },
+      "flaw_match": {
+        "procedure_hash": "4036894148",
+        "prototype_hash": "931230983",
+        "flaw_hash": "3392777041",
+        "flaw_hash_count": 3,
+        "flaw_hash_ordinal": 2,
+        "cause_hash": "1176028798",
+        "cause_hash_count": 1,
+        "cause_hash_ordinal": 1,
+        "cause_hash2": "1522093433",
+        "cause_hash2_ordinal": "5"
+      },
+      "flaw_details_link": "https://downloads.veracode.com/securityscan/cwe/v4/java/89.html"
+    },
+    {
+      "title": "java.sql.PreparedStatement.executeQuery",
+      "issue_id": 1027,
+      "gob": "B",
+      "severity": 4,
+      "issue_type_id": "taint",
+      "issue_type": "Improper Neutralization of Special Elements used in an SQL Command (\u0027SQL Injection\u0027)",
+      "cwe_id": "89",
+      "display_text": "\u003cspan\u003eThis database query contains a SQL injection flaw.  The call to java.sql.PreparedStatement.executeQuery() constructs a dynamic SQL query using a variable derived from untrusted input.  An attacker could exploit this flaw to execute arbitrary SQL queries against the database. executeQuery() was called on the myInfo object, which contains tainted data. The tainted data originated from earlier calls to AnnotationVirtualController.vc_annotation_entry, and java.sql.Statement.executeQuery.\u003c/span\u003e \u003cspan\u003eAvoid dynamically constructing SQL queries.  Instead, use parameterized prepared statements to prevent the database from interpreting the contents of bind variables as part of the query.  Always validate untrusted input to ensure that it conforms to the expected format, using centralized data validation routines when possible.\u003c/span\u003e \u003cspan\u003eReferences: \u003ca href\u003d\"https://cwe.mitre.org/data/definitions/89.html\"\u003eCWE\u003c/a\u003e \u003ca href\u003d\"https://www.owasp.org/index.php/SQL_injection\"\u003eOWASP\u003c/a\u003e \u003ca href\u003d\"https://webappsec.pbworks.com/SQL-Injection\"\u003eWASC\u003c/a\u003e\u003c/span\u003e",
+      "files": {
+        "source_file": {
+          "file": "com/veracode/verademo/controller/UserController.java",
+          "line": 506,
+          "function_name": "showProfile",
+          "qualified_function_name": "com.veracode.verademo.controller.UserController.showProfile",
+          "function_prototype": "java.lang.String showProfile(java.lang.String, org.springframework.ui.Model, javax.servlet.http.HttpServletRequest)",
+          "scope": "com.veracode.verademo.controller.UserController"
+        }
+      },
+      "flaw_match": {
+        "procedure_hash": "4036894148",
+        "prototype_hash": "931230983",
+        "flaw_hash": "1480817290",
+        "flaw_hash_count": 3,
+        "flaw_hash_ordinal": 3,
+        "cause_hash": "2866949028",
+        "cause_hash_count": 1,
+        "cause_hash_ordinal": 1,
+        "cause_hash2": "1522093433",
+        "cause_hash2_ordinal": "4"
+      },
+      "flaw_details_link": "https://downloads.veracode.com/securityscan/cwe/v4/java/89.html"
+    },
+    {
+      "title": "java.sql.PreparedStatement.executeQuery",
+      "issue_id": 1026,
+      "gob": "B",
+      "severity": 4,
+      "issue_type_id": "taint",
+      "issue_type": "Improper Neutralization of Special Elements used in an SQL Command (\u0027SQL Injection\u0027)",
+      "cwe_id": "89",
+      "display_text": "\u003cspan\u003eThis database query contains a SQL injection flaw.  The call to java.sql.PreparedStatement.executeQuery() constructs a dynamic SQL query using a variable derived from untrusted input.  An attacker could exploit this flaw to execute arbitrary SQL queries against the database. executeQuery() was called on the blabberQuery object, which contains tainted data. The tainted data originated from an earlier call to AnnotationVirtualController.vc_annotation_entry.\u003c/span\u003e \u003cspan\u003eAvoid dynamically constructing SQL queries.  Instead, use parameterized prepared statements to prevent the database from interpreting the contents of bind variables as part of the query.  Always validate untrusted input to ensure that it conforms to the expected format, using centralized data validation routines when possible.\u003c/span\u003e \u003cspan\u003eReferences: \u003ca href\u003d\"https://cwe.mitre.org/data/definitions/89.html\"\u003eCWE\u003c/a\u003e \u003ca href\u003d\"https://www.owasp.org/index.php/SQL_injection\"\u003eOWASP\u003c/a\u003e \u003ca href\u003d\"https://webappsec.pbworks.com/SQL-Injection\"\u003eWASC\u003c/a\u003e\u003c/span\u003e",
+      "files": {
+        "source_file": {
+          "file": "com/veracode/verademo/controller/BlabController.java",
+          "line": 490,
+          "function_name": "showBlabbers",
+          "qualified_function_name": "com.veracode.verademo.controller.BlabController.showBlabbers",
+          "function_prototype": "java.lang.String showBlabbers(java.lang.String, org.springframework.ui.Model, javax.servlet.http.HttpServletRequest)",
+          "scope": "com.veracode.verademo.controller.BlabController"
+        }
+      },
+      "flaw_match": {
+        "procedure_hash": "1426715244",
+        "prototype_hash": "364381741",
+        "flaw_hash": "1480817290",
+        "flaw_hash_count": 1,
+        "flaw_hash_ordinal": 1,
+        "cause_hash": "2866949028",
+        "cause_hash_count": 1,
+        "cause_hash_ordinal": 1,
+        "cause_hash2": "1522093433",
+        "cause_hash2_ordinal": "4"
+      },
+      "flaw_details_link": "https://downloads.veracode.com/securityscan/cwe/v4/java/89.html"
+    },
+    {
+      "title": "java.sql.Statement.executeQuery",
+      "issue_id": 1014,
+      "gob": "B",
+      "severity": 4,
+      "issue_type_id": "taint",
+      "issue_type": "Improper Neutralization of Special Elements used in an SQL Command (\u0027SQL Injection\u0027)",
+      "cwe_id": "89",
+      "display_text": "\u003cspan\u003eThis database query contains a SQL injection flaw.  The call to java.sql.Statement.executeQuery() constructs a dynamic SQL query using a variable derived from untrusted input.  An attacker could exploit this flaw to execute arbitrary SQL queries against the database. The first argument to executeQuery() contains tainted data from the variable sqlQuery. The tainted data originated from an earlier call to AnnotationVirtualController.vc_annotation_entry.\u003c/span\u003e \u003cspan\u003eAvoid dynamically constructing SQL queries.  Instead, use parameterized prepared statements to prevent the database from interpreting the contents of bind variables as part of the query.  Always validate untrusted input to ensure that it conforms to the expected format, using centralized data validation routines when possible.\u003c/span\u003e \u003cspan\u003eReferences: \u003ca href\u003d\"https://cwe.mitre.org/data/definitions/89.html\"\u003eCWE\u003c/a\u003e \u003ca href\u003d\"https://www.owasp.org/index.php/SQL_injection\"\u003eOWASP\u003c/a\u003e \u003ca href\u003d\"https://webappsec.pbworks.com/SQL-Injection\"\u003eWASC\u003c/a\u003e\u003c/span\u003e",
+      "files": {
+        "source_file": {
+          "file": "com/veracode/verademo/commands/RemoveAccountCommand.java",
+          "line": 40,
+          "function_name": "execute",
+          "qualified_function_name": "com.veracode.verademo.commands.RemoveAccountCommand.execute",
+          "function_prototype": "void execute(java.lang.String)",
+          "scope": "com.veracode.verademo.commands.RemoveAccountCommand"
+        }
+      },
+      "flaw_match": {
+        "procedure_hash": "2052213374",
+        "prototype_hash": "27480697",
+        "flaw_hash": "3392777041",
+        "flaw_hash_count": 1,
+        "flaw_hash_ordinal": 1,
+        "cause_hash": "1176028798",
+        "cause_hash_count": 1,
+        "cause_hash_ordinal": 1,
+        "cause_hash2": "1522093433",
+        "cause_hash2_ordinal": "5"
+      },
+      "flaw_details_link": "https://downloads.veracode.com/securityscan/cwe/v4/java/89.html"
+    },
+    {
+      "title": "java.sql.Statement.execute",
+      "issue_id": 1009,
+      "gob": "B",
+      "severity": 4,
+      "issue_type_id": "taint",
+      "issue_type": "Improper Neutralization of Special Elements used in an SQL Command (\u0027SQL Injection\u0027)",
+      "cwe_id": "89",
+      "display_text": "\u003cspan\u003eThis database query contains a SQL injection flaw.  The call to java.sql.Statement.execute() constructs a dynamic SQL query using a variable derived from untrusted input.  An attacker could exploit this flaw to execute arbitrary SQL queries against the database. The first argument to execute() contains tainted data from the variable sqlQuery. The tainted data originated from earlier calls to AnnotationVirtualController.vc_annotation_entry, and java.sql.Statement.executeQuery.\u003c/span\u003e \u003cspan\u003eAvoid dynamically constructing SQL queries.  Instead, use parameterized prepared statements to prevent the database from interpreting the contents of bind variables as part of the query.  Always validate untrusted input to ensure that it conforms to the expected format, using centralized data validation routines when possible.\u003c/span\u003e \u003cspan\u003eReferences: \u003ca href\u003d\"https://cwe.mitre.org/data/definitions/89.html\"\u003eCWE\u003c/a\u003e \u003ca href\u003d\"https://www.owasp.org/index.php/SQL_injection\"\u003eOWASP\u003c/a\u003e \u003ca href\u003d\"https://webappsec.pbworks.com/SQL-Injection\"\u003eWASC\u003c/a\u003e\u003c/span\u003e",
+      "files": {
+        "source_file": {
+          "file": "com/veracode/verademo/commands/RemoveAccountCommand.java",
+          "line": 47,
+          "function_name": "execute",
+          "qualified_function_name": "com.veracode.verademo.commands.RemoveAccountCommand.execute",
+          "function_prototype": "void execute(java.lang.String)",
+          "scope": "com.veracode.verademo.commands.RemoveAccountCommand"
+        }
+      },
+      "flaw_match": {
+        "procedure_hash": "2052213374",
+        "prototype_hash": "27480697",
+        "flaw_hash": "239218340",
+        "flaw_hash_count": 6,
+        "flaw_hash_ordinal": 4,
+        "cause_hash": "1176028798",
+        "cause_hash_count": 1,
+        "cause_hash_ordinal": 1,
+        "cause_hash2": "1522093433",
+        "cause_hash2_ordinal": "3"
+      },
+      "flaw_details_link": "https://downloads.veracode.com/securityscan/cwe/v4/java/89.html"
+    },
+    {
+      "title": "java.sql.Statement.execute",
+      "issue_id": 1011,
+      "gob": "B",
+      "severity": 4,
+      "issue_type_id": "taint",
+      "issue_type": "Improper Neutralization of Special Elements used in an SQL Command (\u0027SQL Injection\u0027)",
+      "cwe_id": "89",
+      "display_text": "\u003cspan\u003eThis database query contains a SQL injection flaw.  The call to java.sql.Statement.execute() constructs a dynamic SQL query using a variable derived from untrusted input.  An attacker could exploit this flaw to execute arbitrary SQL queries against the database. The first argument to execute() contains tainted data from the variable sqlQuery. The tainted data originated from an earlier call to AnnotationVirtualController.vc_annotation_entry.\u003c/span\u003e \u003cspan\u003eAvoid dynamically constructing SQL queries.  Instead, use parameterized prepared statements to prevent the database from interpreting the contents of bind variables as part of the query.  Always validate untrusted input to ensure that it conforms to the expected format, using centralized data validation routines when possible.\u003c/span\u003e \u003cspan\u003eReferences: \u003ca href\u003d\"https://cwe.mitre.org/data/definitions/89.html\"\u003eCWE\u003c/a\u003e \u003ca href\u003d\"https://www.owasp.org/index.php/SQL_injection\"\u003eOWASP\u003c/a\u003e \u003ca href\u003d\"https://webappsec.pbworks.com/SQL-Injection\"\u003eWASC\u003c/a\u003e\u003c/span\u003e",
+      "files": {
+        "source_file": {
+          "file": "com/veracode/verademo/commands/RemoveAccountCommand.java",
+          "line": 51,
+          "function_name": "execute",
+          "qualified_function_name": "com.veracode.verademo.commands.RemoveAccountCommand.execute",
+          "function_prototype": "void execute(java.lang.String)",
+          "scope": "com.veracode.verademo.commands.RemoveAccountCommand"
+        }
+      },
+      "flaw_match": {
+        "procedure_hash": "2052213374",
+        "prototype_hash": "27480697",
+        "flaw_hash": "239218340",
+        "flaw_hash_count": 6,
+        "flaw_hash_ordinal": 6,
+        "cause_hash": "1176028798",
+        "cause_hash_count": 1,
+        "cause_hash_ordinal": 1,
+        "cause_hash2": "1522093433",
+        "cause_hash2_ordinal": "3"
+      },
+      "flaw_details_link": "https://downloads.veracode.com/securityscan/cwe/v4/java/89.html"
+    },
+    {
+      "title": "java.sql.Statement.executeQuery",
+      "issue_id": 1013,
+      "gob": "B",
+      "severity": 4,
+      "issue_type_id": "taint",
+      "issue_type": "Improper Neutralization of Special Elements used in an SQL Command (\u0027SQL Injection\u0027)",
+      "cwe_id": "89",
+      "display_text": "\u003cspan\u003eThis database query contains a SQL injection flaw.  The call to java.sql.Statement.executeQuery() constructs a dynamic SQL query using a variable derived from untrusted input.  An attacker could exploit this flaw to execute arbitrary SQL queries against the database. The first argument to executeQuery() contains tainted data from the variable sqlQuery. The tainted data originated from an earlier call to AnnotationVirtualController.vc_annotation_entry.\u003c/span\u003e \u003cspan\u003eAvoid dynamically constructing SQL queries.  Instead, use parameterized prepared statements to prevent the database from interpreting the contents of bind variables as part of the query.  Always validate untrusted input to ensure that it conforms to the expected format, using centralized data validation routines when possible.\u003c/span\u003e \u003cspan\u003eReferences: \u003ca href\u003d\"https://cwe.mitre.org/data/definitions/89.html\"\u003eCWE\u003c/a\u003e \u003ca href\u003d\"https://www.owasp.org/index.php/SQL_injection\"\u003eOWASP\u003c/a\u003e \u003ca href\u003d\"https://webappsec.pbworks.com/SQL-Injection\"\u003eWASC\u003c/a\u003e\u003c/span\u003e",
+      "files": {
+        "source_file": {
+          "file": "com/veracode/verademo/commands/ListenCommand.java",
+          "line": 40,
+          "function_name": "execute",
+          "qualified_function_name": "com.veracode.verademo.commands.ListenCommand.execute",
+          "function_prototype": "void execute(java.lang.String)",
+          "scope": "com.veracode.verademo.commands.ListenCommand"
+        }
+      },
+      "flaw_match": {
+        "procedure_hash": "1600354578",
+        "prototype_hash": "2344031398",
+        "flaw_hash": "3392777041",
+        "flaw_hash_count": 1,
+        "flaw_hash_ordinal": 1,
+        "cause_hash": "1176028798",
+        "cause_hash_count": 1,
+        "cause_hash_ordinal": 1,
+        "cause_hash2": "1522093433",
+        "cause_hash2_ordinal": "5"
+      },
+      "flaw_details_link": "https://downloads.veracode.com/securityscan/cwe/v4/java/89.html"
+    },
+    {
+      "title": "java.sql.Statement.execute",
+      "issue_id": 1008,
+      "gob": "B",
+      "severity": 4,
+      "issue_type_id": "taint",
+      "issue_type": "Improper Neutralization of Special Elements used in an SQL Command (\u0027SQL Injection\u0027)",
+      "cwe_id": "89",
+      "display_text": "\u003cspan\u003eThis database query contains a SQL injection flaw.  The call to java.sql.Statement.execute() constructs a dynamic SQL query using a variable derived from untrusted input.  An attacker could exploit this flaw to execute arbitrary SQL queries against the database. The first argument to execute() contains tainted data from the variable sqlQuery. The tainted data originated from earlier calls to AnnotationVirtualController.vc_annotation_entry, and java.sql.Statement.executeQuery.\u003c/span\u003e \u003cspan\u003eAvoid dynamically constructing SQL queries.  Instead, use parameterized prepared statements to prevent the database from interpreting the contents of bind variables as part of the query.  Always validate untrusted input to ensure that it conforms to the expected format, using centralized data validation routines when possible.\u003c/span\u003e \u003cspan\u003eReferences: \u003ca href\u003d\"https://cwe.mitre.org/data/definitions/89.html\"\u003eCWE\u003c/a\u003e \u003ca href\u003d\"https://www.owasp.org/index.php/SQL_injection\"\u003eOWASP\u003c/a\u003e \u003ca href\u003d\"https://webappsec.pbworks.com/SQL-Injection\"\u003eWASC\u003c/a\u003e\u003c/span\u003e",
+      "files": {
+        "source_file": {
+          "file": "com/veracode/verademo/commands/ListenCommand.java",
+          "line": 47,
+          "function_name": "execute",
+          "qualified_function_name": "com.veracode.verademo.commands.ListenCommand.execute",
+          "function_prototype": "void execute(java.lang.String)",
+          "scope": "com.veracode.verademo.commands.ListenCommand"
+        }
+      },
+      "flaw_match": {
+        "procedure_hash": "1600354578",
+        "prototype_hash": "2344031398",
+        "flaw_hash": "239218340",
+        "flaw_hash_count": 4,
+        "flaw_hash_ordinal": 4,
+        "cause_hash": "1176028798",
+        "cause_hash_count": 1,
+        "cause_hash_ordinal": 1,
+        "cause_hash2": "1522093433",
+        "cause_hash2_ordinal": "3"
+      },
+      "flaw_details_link": "https://downloads.veracode.com/securityscan/cwe/v4/java/89.html"
+    },
+    {
+      "title": "java.sql.Statement.executeQuery",
+      "issue_id": 1012,
+      "gob": "B",
+      "severity": 4,
+      "issue_type_id": "taint",
+      "issue_type": "Improper Neutralization of Special Elements used in an SQL Command (\u0027SQL Injection\u0027)",
+      "cwe_id": "89",
+      "display_text": "\u003cspan\u003eThis database query contains a SQL injection flaw.  The call to java.sql.Statement.executeQuery() constructs a dynamic SQL query using a variable derived from untrusted input.  An attacker could exploit this flaw to execute arbitrary SQL queries against the database. The first argument to executeQuery() contains tainted data from the variable sqlQuery. The tainted data originated from an earlier call to AnnotationVirtualController.vc_annotation_entry.\u003c/span\u003e \u003cspan\u003eAvoid dynamically constructing SQL queries.  Instead, use parameterized prepared statements to prevent the database from interpreting the contents of bind variables as part of the query.  Always validate untrusted input to ensure that it conforms to the expected format, using centralized data validation routines when possible.\u003c/span\u003e \u003cspan\u003eReferences: \u003ca href\u003d\"https://cwe.mitre.org/data/definitions/89.html\"\u003eCWE\u003c/a\u003e \u003ca href\u003d\"https://www.owasp.org/index.php/SQL_injection\"\u003eOWASP\u003c/a\u003e \u003ca href\u003d\"https://webappsec.pbworks.com/SQL-Injection\"\u003eWASC\u003c/a\u003e\u003c/span\u003e",
+      "files": {
+        "source_file": {
+          "file": "com/veracode/verademo/commands/IgnoreCommand.java",
+          "line": 40,
+          "function_name": "execute",
+          "qualified_function_name": "com.veracode.verademo.commands.IgnoreCommand.execute",
+          "function_prototype": "void execute(java.lang.String)",
+          "scope": "com.veracode.verademo.commands.IgnoreCommand"
+        }
+      },
+      "flaw_match": {
+        "procedure_hash": "592522510",
+        "prototype_hash": "154563142",
+        "flaw_hash": "3392777041",
+        "flaw_hash_count": 1,
+        "flaw_hash_ordinal": 1,
+        "cause_hash": "1176028798",
+        "cause_hash_count": 1,
+        "cause_hash_ordinal": 1,
+        "cause_hash2": "1522093433",
+        "cause_hash2_ordinal": "5"
+      },
+      "flaw_details_link": "https://downloads.veracode.com/securityscan/cwe/v4/java/89.html"
+    },
+    {
+      "title": "java.sql.Statement.execute",
+      "issue_id": 1007,
+      "gob": "B",
+      "severity": 4,
+      "issue_type_id": "taint",
+      "issue_type": "Improper Neutralization of Special Elements used in an SQL Command (\u0027SQL Injection\u0027)",
+      "cwe_id": "89",
+      "display_text": "\u003cspan\u003eThis database query contains a SQL injection flaw.  The call to java.sql.Statement.execute() constructs a dynamic SQL query using a variable derived from untrusted input.  An attacker could exploit this flaw to execute arbitrary SQL queries against the database. The first argument to execute() contains tainted data from the variable sqlQuery. The tainted data originated from earlier calls to AnnotationVirtualController.vc_annotation_entry, and java.sql.Statement.executeQuery.\u003c/span\u003e \u003cspan\u003eAvoid dynamically constructing SQL queries.  Instead, use parameterized prepared statements to prevent the database from interpreting the contents of bind variables as part of the query.  Always validate untrusted input to ensure that it conforms to the expected format, using centralized data validation routines when possible.\u003c/span\u003e \u003cspan\u003eReferences: \u003ca href\u003d\"https://cwe.mitre.org/data/definitions/89.html\"\u003eCWE\u003c/a\u003e \u003ca href\u003d\"https://www.owasp.org/index.php/SQL_injection\"\u003eOWASP\u003c/a\u003e \u003ca href\u003d\"https://webappsec.pbworks.com/SQL-Injection\"\u003eWASC\u003c/a\u003e\u003c/span\u003e",
+      "files": {
+        "source_file": {
+          "file": "com/veracode/verademo/commands/IgnoreCommand.java",
+          "line": 47,
+          "function_name": "execute",
+          "qualified_function_name": "com.veracode.verademo.commands.IgnoreCommand.execute",
+          "function_prototype": "void execute(java.lang.String)",
+          "scope": "com.veracode.verademo.commands.IgnoreCommand"
+        }
+      },
+      "flaw_match": {
+        "procedure_hash": "592522510",
+        "prototype_hash": "154563142",
+        "flaw_hash": "239218340",
+        "flaw_hash_count": 4,
+        "flaw_hash_ordinal": 4,
+        "cause_hash": "1176028798",
+        "cause_hash_count": 1,
+        "cause_hash_ordinal": 1,
+        "cause_hash2": "1522093433",
+        "cause_hash2_ordinal": "3"
+      },
+      "flaw_details_link": "https://downloads.veracode.com/securityscan/cwe/v4/java/89.html"
+    },
+    {
+      "title": "eval",
+      "issue_id": 1003,
+      "gob": "B",
+      "severity": 5,
+      "issue_type_id": "taint",
+      "issue_type": "Improper Neutralization of Directives in Dynamically Evaluated Code (\u0027Eval Injection\u0027)",
+      "cwe_id": "95",
+      "display_text": "\u003cspan\u003eThis call to eval() contains untrusted input or potentially untrusted data.  If this input could be modified by an attacker, arbitrary JS code could be executed. \u003c/span\u003e \u003cspan\u003eValidate all untrusted and untrusted input to ensure that it conforms to the expected format, using centralized data validation routines when possible.  In general, avoid executing code derived from untrusted input.\u003c/span\u003e \u003cspan\u003eReferences: \u003ca href\u003d\"https://cwe.mitre.org/data/definitions/95.html\"\u003eCWE\u003c/a\u003e\u003c/span\u003e",
+      "files": {
+        "source_file": {
+          "file": "WEB-INF/views/login.jsp",
+          "line": 33,
+          "function_name": "!main",
+          "qualified_function_name": "!main",
+          "function_prototype": "!main() : void",
+          "scope": "UNKNOWN"
+        }
+      },
+      "flaw_match": {
+        "procedure_hash": "3915450586",
+        "prototype_hash": "211846691",
+        "flaw_hash": "3524018929",
+        "flaw_hash_count": 1,
+        "flaw_hash_ordinal": 1,
+        "cause_hash": "4199849900",
+        "cause_hash_count": 1,
+        "cause_hash_ordinal": 1,
+        "cause_hash2": "489697663",
+        "cause_hash2_ordinal": "1"
+      },
+      "flaw_details_link": "https://downloads.veracode.com/securityscan/cwe/v4/java/95.html"
+    },
+    {
+      "title": "update",
+      "issue_id": 1007,
+      "gob": "B",
+      "severity": 4,
+      "issue_type_id": "crypto",
+      "issue_type": "Authorization Bypass Through User-Controlled Key",
+      "cwe_id": "639",
+      "display_text": "\u003cspan\u003eThe property named update contains untrusted data, and (due to its name) may contain internal authorization data. \u003c/span\u003e \u003cspan\u003eEnsure that nothing in this application relies on this value to be a trusted indicator of security privilege or identity.\u003c/span\u003e \u003cspan\u003eReferences: \u003ca href\u003d\"https://cwe.mitre.org/data/definitions/639.html\"\u003eCWE\u003c/a\u003e\u003c/span\u003e",
+      "files": {
+        "source_file": {
+          "file": "resources/js/contributions-dao.js",
+          "line": 28,
+          "function_name": "lambda_3",
+          "qualified_function_name": "lambda_3",
+          "function_prototype": "lambda_3(: any,  : any,  : any,  : any,  : any,  : any, ...) : any",
+          "scope": "UNKNOWN"
+        }
+      },
+      "flaw_match": {
+        "procedure_hash": "84734319",
+        "prototype_hash": "2953293440",
+        "flaw_hash": "1337759664",
+        "flaw_hash_count": 1,
+        "flaw_hash_ordinal": 1,
+        "cause_hash": "2898746875",
+        "cause_hash_count": 1,
+        "cause_hash_ordinal": 1,
+        "cause_hash2": "0",
+        "cause_hash2_ordinal": "0"
+      },
+      "flaw_details_link": "https://downloads.veracode.com/securityscan/cwe/v4/java/639.html"
+    },
+    {
+      "title": "findOne",
+      "issue_id": 1006,
+      "gob": "B",
+      "severity": 4,
+      "issue_type_id": "crypto",
+      "issue_type": "Authorization Bypass Through User-Controlled Key",
+      "cwe_id": "639",
+      "display_text": "\u003cspan\u003eThe property named findOne contains untrusted data, and (due to its name) may contain internal authorization data. \u003c/span\u003e \u003cspan\u003eEnsure that nothing in this application relies on this value to be a trusted indicator of security privilege or identity.\u003c/span\u003e \u003cspan\u003eReferences: \u003ca href\u003d\"https://cwe.mitre.org/data/definitions/639.html\"\u003eCWE\u003c/a\u003e\u003c/span\u003e",
+      "files": {
+        "source_file": {
+          "file": "resources/js/contributions-dao.js",
+          "line": 57,
+          "function_name": "lambda_6",
+          "qualified_function_name": "lambda_6",
+          "function_prototype": "lambda_6(: any,  : any,  : any, ...) : any",
+          "scope": "UNKNOWN"
+        }
+      },
+      "flaw_match": {
+        "procedure_hash": "119099815",
+        "prototype_hash": "2572409583",
+        "flaw_hash": "3218150524",
+        "flaw_hash_count": 1,
+        "flaw_hash_ordinal": 1,
+        "cause_hash": "3903414968",
+        "cause_hash_count": 1,
+        "cause_hash_ordinal": 1,
+        "cause_hash2": "0",
+        "cause_hash2_ordinal": "0"
+      },
+      "flaw_details_link": "https://downloads.veracode.com/securityscan/cwe/v4/java/639.html"
+    }
+  ],
+  "pipeline_scan": "21.10.2-0",
+  "dev_stage": "DEVELOPMENT"
+}

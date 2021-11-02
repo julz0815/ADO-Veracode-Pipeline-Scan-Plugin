@@ -4,7 +4,7 @@ import TFS_Build_Contracts = require("TFS/Build/Contracts");
 import TFS_Build_Extension_Contracts = require("TFS/Build/ExtensionContracts");
 import DT_Client = require("TFS/DistributedTask/TaskRestClient");
 import { data } from "jquery";
-import scriptFiles from "../../publishhtmlreport/scriptFiles"
+
 
 export class InfoTab extends Controls.BaseControl {
 	constructor() {
@@ -23,9 +23,9 @@ export class InfoTab extends Controls.BaseControl {
 
 				const taskClient = DT_Client.getClient();
 				
-				scriptFiles.forEach((item: string) => {
-					this.insertScript(taskClient, vsoContext, build, `pub_${item}`, `pub_${item}`);
-				})
+				//scriptFiles.forEach((item: string) => {
+				//	this.insertScript(taskClient, vsoContext, build, `pub_${item}`, `pub_${item}`);
+				//})
 
 				taskClient.getPlanAttachments(vsoContext.project.id, "build", build.orchestrationPlan.planId, "replacedhtml").then((taskAttachments) => {
 					$.each(taskAttachments, (index, taskAttachment) => {
@@ -58,35 +58,6 @@ export class InfoTab extends Controls.BaseControl {
 			newstring += String.fromCharCode(arr[i]);
 		}
 		return newstring;
-	}
-	private insertScript(taskClient: DT_Client.TaskHttpClient4, vsoContext: WebContext, build: TFS_Build_Contracts.Build, scriptName: string, scriptElementName: string) {
-		taskClient.getPlanAttachments(vsoContext.project.id, "build", build.orchestrationPlan.planId, scriptName).then((taskAttachments) => {
-			$.each(taskAttachments, (index, taskAttachment) => {
-				if (taskAttachment._links && taskAttachment._links.self && taskAttachment._links.self.href) {
-					var recId = taskAttachment.recordId;
-					var timelineId = taskAttachment.timelineId;
-
-					taskClient.getAttachmentContent(vsoContext.project.id, "build", build.orchestrationPlan.planId, timelineId, recId, scriptName, taskAttachment.name).then((attachmentContent) => {
-						var content = this.arrayBufferToString(attachmentContent);
-				
-						var scriptElement = document.getElementById(scriptElementName)
-						document.body.style.overflow = "visible";
-						
-						if (scriptElement) {
-							var children = document.getElementById(scriptElementName).childNodes;
-							for (let i = 0; i < children.length; i++) {
-								document.getElementById(scriptElementName).childNodes[i].remove();
-							}
-							var s = document.createElement("script");
-							s.innerHTML = content
-							s.async = false
-
-							document.getElementById(scriptElementName).appendChild(s)
-						}
-					})
-				}
-			})
-		})
 	}
 }
 

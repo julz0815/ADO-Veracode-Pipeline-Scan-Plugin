@@ -1,20 +1,11 @@
 {
     "manifestVersion": 1,
-    "id": "PublishHTMLReports",
-    "version": "1.2.174",
-    "name": "PublishHTMLReports",
-    "description": "An extension which lets you publish and visualize HTML reports(Like Jmeter load test reports) in Azure Devops as a seperate tab. ",
-    "publisher": "LakshayKaushik",
-    "public": true,
-    "repository": {
-        "type": "git",
-        "uri": "https://github.com/lakshaykaushik/PublishHTMLReport"
-    },
-    "screenshots": [
-        {
-            "path": "images/Sample7.png"
-        }
-    ],
+    "id": "VeracodePipelineScan",
+    "version": "0.0.74",
+    "name": "Veracode Pipeline Scan",
+    "description": "An extension which lets you run Veracode's pipeline scan and publish resulsts as a seperate tab. ",
+    "publisher": "JulianTotzek-Hallhuber",
+    "public": false,
     "content": {
         "details": {
             "path": "overview.md"
@@ -24,14 +15,14 @@
         }
     },
     "icons": {
-        "default": "images/Sample6.png"
+        "default": "images/VC_logo.png"
     },    
     "tags": [
-        "Build",
-        "Jmeter",
-        "Build Pipeline",
-        "HTML",
-        "HTML Reports"
+        "Security",
+        "Veracode",
+        "Sast",
+        "Pipeline Scan",
+        "Code analysis"
     ],
      "scopes": [
         "vso.build_execute"
@@ -55,41 +46,13 @@
             "packagePath": "scripts"
         },
         {
-            "path": "sbadmin2-1.0.7",
-            "addressable": true
-        },
-        {
             "path": "index.html",
             "addressable": true
         },
         {
-            "path": "OverTime.html",
+            "path": "pipelinescan",
             "addressable": true
-        },
-        {
-            "path": "Throughput.html",
-            "addressable": true
-        },
-        {
-            "path": "ResponseTimes.html",
-            "addressable": true
-        },
-        {
-            "path": "CustomsGraphs.html",
-            "addressable": true
-        },
-        {
-            "path": "publishhtmlreport",
-            "addressable": true
-        },
-        {
-            "path": "content/css",
-            "addressable": true
-        },
-        {
-            "path": "jquery.tablesorter.min.js",
-            "addressable": true
-        },                
+        },          
         {
             "path": "node_modules/vss-web-extension-sdk/lib",
             "addressable": true,
@@ -105,19 +68,19 @@
                 "ms.vss-build-web.build-results-view"
             ],
             "properties": {
-                "name": "Published HTML",
+                "name": "Veracode Pipeline Scan results",
                 "uri": "index.html",
-                "supportsTasks": ["99e8d79d-febd-4f2e-b2df-da8f8257b59a"]
+                "supportsTasks": ["99e8d79d-febd-4f2e-b2df-da8f8257b59c"]
             }
         },
         {
-            "id": "publishhtmlreport",
+            "id": "pipelinescan",
             "type": "ms.vss-distributed-task.task",
             "targets": [
                 "ms.vss-distributed-task.tasks"
             ],
             "properties": {
-                "name": "publishhtmlreport"
+                "name": "pipelinescan"
             }
         }
     ]
