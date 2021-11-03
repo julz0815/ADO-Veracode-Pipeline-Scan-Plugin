@@ -145,7 +145,7 @@ function run() {
                 data = "";
                 k = 0;
                 while (k < numberOfVulns) {
-                    data += "<tr valign=\"top\" class=\"Severity-" + results.findings[k].severity + "\"><td>" + results.findings[k].cwe_id + "</td><td>" + results.findings[k].issue_type + "</td><td>" + results.findings[k].severity + "</td><td>" + results.findings[k].files.source_file.file + ":" + results.findings[k].files.source_file.line + "</td></tr><tr valign=\"top\" class=\"Severity-" + results.findings[k].severity + "\"><td colspan=\"4\"><details><summary>Show details</summary><p>" + results.findings[k].display_text + "</p></details></td></tr>";
+                    data += "<tr valign=\"top\"><td>" + results.findings[k].cwe_id + "</td><td>" + results.findings[k].issue_type + "</td><td class=\"Severity-" + results.findings[k].severity + "\">" + results.findings[k].severity + "</td><td>" + results.findings[k].files.source_file.file + ":" + results.findings[k].files.source_file.line + "</td></tr><tr valign=\"top\"><td colspan=\"4\"><details><summary>Show details</summary><p>" + results.findings[k].display_text + "</p></details></td></tr>";
                     k++;
                 }
                 fullReportString = header + table_start + data + table_end;
