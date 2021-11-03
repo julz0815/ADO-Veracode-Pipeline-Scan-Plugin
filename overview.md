@@ -12,7 +12,7 @@ The Veracode pipeline scan is desgined as a fast feedback tool for developers an
 ATTENTION  
 ---------
 This is a community plugin and NOT officially supported by Veracode.
-Additional documentation and source code can be found at https://www.github.com/xxxxxx
+Additional documentation and source code can be found at https://github.com/julz0815/ADO-Veracode-Pipeline-Scan-Plugin
 
 ## Usage:
 
