@@ -46,8 +46,7 @@ if [ "$version_new" != "$version_old" ]; then
     copy_file=$(mv ./JulianTotzek-Hallhuber.VeracodePipelineScan-0.0.$new_plugin_version.vsix ./builds)
 
     # Publish to market place
-    #token=bdzt6qq2led62clu3kylyhm2vnpw7nn5qr2ynt5wdiixyrostmaq
-    tfx extension publish --vsix "builds/JulianTotzek-Hallhuber.VeracodePipelineScan-0.0.$new_plugin_version.vsix" --share-with jtotzek --token bdzt6qq2led62clu3kylyhm2vnpw7nn5qr2ynt5wdiixyrostmaq
+    tfx extension publish --vsix "builds/JulianTotzek-Hallhuber.VeracodePipelineScan-0.0.$new_plugin_version.vsix" --share-with $1 --token $2
 
 else
     echo "No new version stop here!"
