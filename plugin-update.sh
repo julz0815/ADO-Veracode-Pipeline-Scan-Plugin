@@ -1,4 +1,5 @@
 #/bin/bash
+#./plugin-update.sh ADO_ORG ADO_TOKEN justBuildIt
 
 cd new_pipeline_scanner
 
@@ -27,9 +28,13 @@ if [ "$version_new" != "$version_old" ]; then
     if [[ "$OSTYPE" == "darwin"* ]]; then
         echo "Patching ./vss-extension.json"
         sed -i "" "s/\"version\":.*/\"version\": \"0.0.$new_plugin_version\",/g" "./vss-extension.json"
+        echo "Patching ./pipelinescan/task.json"
+        sed -i "" "s/\"Patch\":.*/\"Patch\": \"$new_plugin_version\",/g" "./pipelinescan/task.json"
     else
         echo "Patching ./vss-extension.json"
         sed -i "s/\"version\":.*/\"version\": \"0.0.$new_plugin_version\",/g" "./vss-extension.json"
+        echo "Patching ./pipelinescan/task.json"
+        sed -i "s/\"Patch\":.*/\"patch\": \"$new_plugin_version\",/g" "./pipelinescan/vss-extension.json"
     fi
 
 
@@ -65,9 +70,13 @@ else
         if [[ "$OSTYPE" == "darwin"* ]]; then
             echo "Patching ./vss-extension.json"
             sed -i "" "s/\"version\":.*/\"version\": \"0.0.$new_plugin_version\",/g" "./vss-extension.json"
+            echo "Patching ./pipelinescan/task.json"
+            sed -i "" "s/\"Patch\":.*/\"Patch\": \"$new_plugin_version\",/g" "./pipelinescan/task.json"
         else
             echo "Patching ./vss-extension.json"
             sed -i "s/\"version\":.*/\"version\": \"0.0.$new_plugin_version\",/g" "./vss-extension.json"
+            echo "Patching ./pipelinescan/task.json"
+            sed -i "s/\"Patch\":.*/\"patch\": \"$new_plugin_version\",/g" "./pipelinescan/vss-extension.json"
         fi
 
         #build the plugin

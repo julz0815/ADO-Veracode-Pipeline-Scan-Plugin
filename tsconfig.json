@@ -2,7 +2,8 @@
     "compilerOptions": {
         "module": "amd",
         "moduleResolution": "node",
-        "target": "es2015",
+        "target": "es2020",
+        //"target": "es2015",
         "skipLibCheck": true,
         "outDir": "dist/",
         "types": [

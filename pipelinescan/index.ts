@@ -2,6 +2,7 @@ import tl = require('azure-pipelines-task-lib/task');
 import trm from 'azure-pipelines-task-lib/toolrunner';
 import cheerio = require('cheerio');
 import { execSync } from 'child_process';
+import { Console } from 'console';
 import fs = require('fs')
 import { stringify } from 'querystring';
 
@@ -21,7 +22,6 @@ async function run() {
         const baseLineFile = tl.getInput('baseLineFile');
         const additionalFlags = tl.getInput('additionalFlags');
         const breakPipeline = tl.getInput('breakPipeline');
-        console.log('break pipeline: '+breakPipeline)
 
         //Show debug
         //console.log(inputString+' - '+apiid+' - '+apikey+' - '+policyName+' - '+baseLineFile+' - '+additionalFlags)
@@ -56,7 +56,7 @@ async function run() {
             const fileNameStringPositionEnd = getPolicyOutput.indexOf('\'.');
             const fileNameString = getPolicyOutput.substring(fileNameStringPositionStart+6,fileNameStringPositionEnd)
             console.log('Stored Veracode Policy file: '+fileNameString)
-            const policyFileParam = ' --policy_file '+fileNameString
+            const policyFileParam = ' --policy_file \''+fileNameString+'\''
 
         }
 
@@ -76,34 +76,28 @@ async function run() {
         }
 
 
-        //check the additional parameters
+        //check the additional parameters - still to be implemented - only doing some quotes cleanup
         if ( typeof additionalFlags !== 'undefined'){
 
             //bad parameters
             const badParameters = ['-f','--file','-rp','--request_policy','-vid','--veracode_api_id','-vkey','--veracode_api_key','-bf','--baseline_file','-jo','--json_output','-jf','--json_output_file','-gig','--gl_issu_generation','-gvg','--gl_vulnerability_generation']
             const badParametersLenght = badParameters.length
 
-            //build array from additional parameters
-            const additionalFlagsArray = additionalFlags.split(' ')
-            const additionalFlagsLength = additionalFlagsArray.length
+            //all parameters
+            const allParameters = ['-h','-v','-f','-prof','-vkey','-vid','-fs fail_on_severity','-fc fail_on_cwe','-bf','-t','-id','-sd','-jd','-so','-sf','-jo','-jf','-p','-u','-r','-aid','-ds','-gig','-gvg','-fjf','-pn','-pf','-rp','-V','--file','--request_policy','--veracode_profile','--veracode_api_id','--veracode_api_key','--fail_on_severity','--fail_on_cwe','--baseline_file','--policy_name','--policy_file','--timeout','--issue_details','--summary_display','--json_display','--verbose','--summary_output','--summary_output_file','--json_output','--json_output_file','--filtered_json_output_file','--gl_issue_generation','--gl_vulnerability_generation','--project_name','--project_url','--project_ref','--app_id','--development_stage','--help','--version']
+            const allParametersLength = allParameters.length
 
-            let i=0
-            while ( i < badParametersLenght ) {
-                let j = 0
-                while ( j < additionalFlagsLength){
-                    if ( additionalFlagsArray[j] == badParameters[i]){
-                        //remove bad parameter from additional flags array
-                        console.log('Bad parameter "'+badParameters[i]+'" found. This parameter will not work with this plugin and will be skipped.')
-                        additionalFlagsArray.splice(j,2)
-                    }
-                    j++
-                }
-                i++
-            }
-            //create new additional flags string
-            const newAdditionalFlagsString = additionalFlagsArray.toString()
-            const newAdditionalFlags = newAdditionalFlagsString.replace(/,/g, " ")
-
+            //replace quotes to single quotes
+            var repalcedAdditionalFlags = additionalFlags.replace(/"/g,"'")
+            repalcedAdditionalFlags = repalcedAdditionalFlags.replace(/“/g,"'")
+            repalcedAdditionalFlags = repalcedAdditionalFlags.replace(/“/g,"'")
+            repalcedAdditionalFlags = repalcedAdditionalFlags.replace(/„/g,"'")
+            repalcedAdditionalFlags = repalcedAdditionalFlags.replace(/´/g,"'")
+            repalcedAdditionalFlags = repalcedAdditionalFlags.replace(/`/g,"'")
+            //const splitRegEx = /((^-|^--)[\a-zA-Z\_]+\s(\'[a-zA-Z0-9\/:\._\-\s]+\'))/g
+            //const splitRegEx = /((^-|^--)[\a-zA-Z\_]+)/;
+            //const splitRegEx = /(-|--)/g;
+ 
         }
 
         //create pipeline scan command string
@@ -116,8 +110,11 @@ async function run() {
         if (typeof policyFileParam !== 'undefined'){
             pipelineScanCommandString2=policyFileParam
         }
-        if (typeof newAdditionalFlags !== 'undefined'){
-            pipelineScanCommandString3=' '+newAdditionalFlags
+        //if (typeof newAdditionalFlags !== 'undefined'){
+        if (typeof additionalFlags !== 'undefined'){
+            pipelineScanCommandString3=' '+repalcedAdditionalFlags
+            //to correctly work, bad param checks is disabled for now.
+            //pipelineScanCommandString3=' '+newAdditionalFlags
         }
         const pipelineScanCommandString = pipelineScanCommandString1+pipelineScanCommandString2+pipelineScanCommandString3
    
@@ -144,7 +141,7 @@ async function run() {
 
 
         var header = "Veracode Pipeline Scan found "+numberOfVulns+" Vulnerabilities.<br>"
-        var table_start="<table class=\"myTable\"><tr><th>CWE</th><th>CWE Name</th><th>Severity</th><th>File:Linenumber</th></tr>"
+        var table_start="<table class=\"myTable\"><tr><th>CWE</th><th>CWE Name</th><th>Severity&nbsp;</th><th>File:Linenumber</th></tr>"
         var table_end="</table>"
 
         var data =""

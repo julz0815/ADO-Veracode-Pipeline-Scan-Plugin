@@ -34,8 +34,8 @@ Example
 ```
 - task: VeracodePipelineScan@1  
   inputs:  
-    Veracode API ID: '$(vid)'  
-    Veracode API Secret: '$(vkey)'  
+    VeracodeAPIID: '$(vid)'  
+    VeracodeAPISecret: '$(vkey)'  
     fileToScan: '$(System.DefaultWorkingDirectory)/target/verademo.war'  
 ```    
 The values you see here are also presets of the plugin and need to be adjust to fit your environment and application architecture.  

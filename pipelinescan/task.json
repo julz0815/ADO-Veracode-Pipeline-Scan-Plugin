@@ -8,9 +8,9 @@
     "category": "Utility",
     "author": "JulianTotzek-Hallhuber",
     "version": {
-        "Major": 1,
-        "Minor": 2,
-        "Patch": 174
+        "Major": 0,
+        "Minor": 0,
+        "Patch": "85",
     },
     "instanceNameFormat": "VeracodePipelineScan",
     "inputs": [
