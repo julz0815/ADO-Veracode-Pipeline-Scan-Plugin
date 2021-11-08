@@ -2,10 +2,11 @@
 
 
 on:
+  push:
+    branches: [ master ]
   schedule:
     - cron: '35 9 * * *'
-  commit:
-    branches: [ master ]
+
 
  
  build-plugin:
