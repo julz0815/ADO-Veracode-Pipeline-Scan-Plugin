@@ -7,12 +7,12 @@ on:
   schedule:
     - cron: '35 9 * * *'
 
-
+jobs:
  
  build-plugin:
     runs-on: ubuntu-latest
     steps:
-      - name: build ADO pipeline scna plugin
+      - name: build ADO pipeline scan plugin
         run: |
           ./plugin-update.sh ${{ secrets.ADO_ORG }} ${{ secrets.ADO_TOKEN }}
 
