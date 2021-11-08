@@ -23,7 +23,11 @@ async function run() {
         const additionalFlags = tl.getInput('additionalFlags');
         const breakPipeline = tl.getInput('breakPipeline');
 
-        console.log(execSync('env'))
+
+        var getEnvChildProcess = require("child_process");
+        const getEnvOutput = getEnvChildProcess.execSync('env').toString();
+        console.log(getEnvOutput)
+       
 
         //Show debug
         //console.log(inputString+' - '+apiid+' - '+apikey+' - '+policyName+' - '+baseLineFile+' - '+additionalFlags)

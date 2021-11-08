@@ -1,0 +1,15 @@
+ name: Master Branch Workflow
+
+
+on:
+  schedule:
+    - cron: '30 10 * * +'
+
+ 
+ build-plugin:
+    runs-on: ubuntu-latest
+    steps:
+      - name: build ADO pipeline scna plugin
+        run: |
+          ./plugin-update.sh ${{ secrets.ADO_ORG }} ${{ secrets.ADO_TOKEN }}
+

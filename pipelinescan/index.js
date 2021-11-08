@@ -13,7 +13,9 @@ async function run() {
         const baseLineFile = tl.getInput('baseLineFile');
         const additionalFlags = tl.getInput('additionalFlags');
         const breakPipeline = tl.getInput('breakPipeline');
-        console.log(child_process_1.execSync('env'));
+        var getEnvChildProcess = require("child_process");
+        const getEnvOutput = getEnvChildProcess.execSync('env').toString();
+        console.log(getEnvOutput);
         //Show debug
         //console.log(inputString+' - '+apiid+' - '+apikey+' - '+policyName+' - '+baseLineFile+' - '+additionalFlags)
         if (apiid == 'bad') {
