@@ -15,7 +15,7 @@ async function run() {
         const breakPipeline = tl.getInput('breakPipeline');
         var getEnvChildProcess = require("child_process");
         const getEnvOutput = getEnvChildProcess.execSync('env').toString();
-        console.log(getEnvOutput);
+        //console.log(getEnvOutput)
         //Show debug
         //console.log(inputString+' - '+apiid+' - '+apikey+' - '+policyName+' - '+baseLineFile+' - '+additionalFlags)
         if (apiid == 'bad') {
@@ -96,7 +96,7 @@ async function run() {
         console.log("Pipeline command: " + pipelineScanCommand);
         let commandOutput;
         try {
-            commandOutput = child_process_1.execSync(pipelineScanCommand);
+            commandOutput = (0, child_process_1.execSync)(pipelineScanCommand);
         }
         catch (ex) {
             console.log(ex.stdout.toString());
