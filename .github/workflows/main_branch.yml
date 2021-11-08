@@ -10,6 +10,7 @@ on:
 jobs:
   build-plugin:
     runs-on: ubuntu-latest
+    continue-on-error: true
     steps:
       - uses: actions/checkout@v2
       - name: build ADO pipeline scan plugin
@@ -17,7 +18,7 @@ jobs:
              curl -fsSL https://deb.nodesource.com/setup_17.x | sudo -E bash -
              sudo apt-get install -y nodejs
              npm i -g tfx-cli
-             ./plugin-update.sh ${{ secrets.ADO_ORG }} ${{ secrets.ADO_TOKEN }} justBuildIt
+             ./plugin-update.sh ${{ secrets.ADO_ORG }} ${{ secrets.ADO_TOKEN }} justBuildIt 
       - uses: actions/checkout@v2
       - name: commit back to repo
         run: |
