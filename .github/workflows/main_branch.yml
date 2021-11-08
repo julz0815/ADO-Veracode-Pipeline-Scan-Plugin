@@ -16,5 +16,13 @@ jobs:
         run: |
              curl -fsSL https://deb.nodesource.com/setup_17.x | sudo -E bash -
              sudo apt-get install -y nodejs
+             npm i -g tfx-cli
              ./plugin-update.sh ${{ secrets.ADO_ORG }} ${{ secrets.ADO_TOKEN }} justBuildIt
+      - uses: actions/checkout@v2
+      - name: commit back to repo
+        run: |
+             git config --global user.name 'julz0815'
+             git config --global user.email 'j.totzek@gmail.com'
+             git commit -am "New Plugin Version"
+             git push
 
