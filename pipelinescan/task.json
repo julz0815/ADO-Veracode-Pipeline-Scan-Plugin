@@ -10,7 +10,7 @@
     "version": {
         "Major": 0,
         "Minor": 0,
-        "patch": "96",
+        "Patch": 99
     },
     "instanceNameFormat": "VeracodePipelineScan",
     "inputs": [
