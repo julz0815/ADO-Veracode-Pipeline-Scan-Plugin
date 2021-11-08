@@ -3,7 +3,7 @@
 
 on:
   schedule:
-    - cron: '35 9 * * +'
+    - cron: '35 9 * * *'
   commit:
     branches: [ master ]
 
