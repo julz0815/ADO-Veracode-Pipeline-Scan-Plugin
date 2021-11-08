@@ -27,4 +27,3 @@ jobs:
              git add -A
              git commit -am "New Plugin Version"
              git push --verbose
-
