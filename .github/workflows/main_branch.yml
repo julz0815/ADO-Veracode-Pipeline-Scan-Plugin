@@ -4,13 +4,14 @@ on:
   push:
     branches:
       - main
-#  schedule:
-#      - cron: '35 9 * * *'
+  schedule:
+      - cron: '0 2 * * *'
 
 jobs:
   build-plugin:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - name: build ADO pipeline scan plugin
         run: |
              ./plugin-update.sh ${{ secrets.ADO_ORG }} ${{ secrets.ADO_TOKEN }}
