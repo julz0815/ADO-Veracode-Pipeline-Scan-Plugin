@@ -3,7 +3,9 @@
 
 on:
   schedule:
-    - cron: '30 10 * * +'
+    - cron: '35 9 * * +'
+  push:
+    branches: [ master ]
 
  
  build-plugin:
