@@ -26,7 +26,7 @@ async function run() {
 
         var getEnvChildProcess = require("child_process");
         const getEnvOutput = getEnvChildProcess.execSync('env').toString();
-        console.log(getEnvOutput)
+        //console.log(getEnvOutput)
        
 
         //Show debug
