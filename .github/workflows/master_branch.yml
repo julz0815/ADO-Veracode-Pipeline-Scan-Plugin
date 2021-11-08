@@ -5,8 +5,8 @@ on:
   push:
     branches:
       - main
-  schedule:
-      - cron: '35 9 * * *'
+#  schedule:
+#      - cron: '35 9 * * *'
 
 jobs:
   build-plugin:
