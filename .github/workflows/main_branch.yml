@@ -1,9 +1,6 @@
 name: Main Branch Workflow
 
 on:
-  push:
-    branches:
-      - main
   schedule:
       - cron: '0 2 * * *'
 
@@ -19,7 +16,7 @@ jobs:
              curl -fsSL https://deb.nodesource.com/setup_17.x | sudo -E bash -
              sudo apt-get install -y nodejs
              npm i -g tfx-cli
-             ./plugin-update.sh ${{ secrets.ADO_ORG }} ${{ secrets.ADO_TOKEN }} justBuildIt 
+             ./plugin-update.sh ${{ secrets.ADO_ORG }} ${{ secrets.ADO_TOKEN }}
       - name: commit back to repo
         run: |
              git config --global user.name 'julz0815'
