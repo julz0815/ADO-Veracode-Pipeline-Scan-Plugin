@@ -8,11 +8,10 @@ on:
     - cron: '35 9 * * *'
 
 jobs:
- 
- build-plugin:
+  build-plugin:
     runs-on: ubuntu-latest
     steps:
       - name: build ADO pipeline scan plugin
         run: |
-          ./plugin-update.sh ${{ secrets.ADO_ORG }} ${{ secrets.ADO_TOKEN }}
+             ./plugin-update.sh ${{ secrets.ADO_ORG }} ${{ secrets.ADO_TOKEN }}
 
