@@ -4,7 +4,7 @@
 on:
   schedule:
     - cron: '35 9 * * +'
-  push:
+  commit:
     branches: [ master ]
 
  
