@@ -25,5 +25,5 @@ jobs:
              git config --global user.name 'julz0815'
              git config --global user.email 'j.totzek@gmail.com'
              git commit -am "New Plugin Version"
-             git push
+             git push --verbose
 
