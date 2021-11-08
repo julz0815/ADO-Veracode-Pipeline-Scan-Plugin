@@ -1,4 +1,4 @@
-# Azure Devops Extension - Veracode Pipeline Scna
+# Azure Devops Extension - Veracode Pipeline Scan
 This plugin should make it easier to run the Veracode pipeline scan on Azure DevOps pipelines. The full scan jar is included within the plugin and don't need to be downaloded each time when the pipeline runs.  
 In addition it will populate an additional tab on your pipeline run to display results in a more convinient way.  
 The plugin will automatically update itself every night if a new version of the piepline scan jar is published.  
