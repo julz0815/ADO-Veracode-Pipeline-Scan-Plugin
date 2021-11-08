@@ -5,7 +5,7 @@
     "name": "Veracode Pipeline Scan",
     "description": "An extension which lets you run Veracode's pipeline scan and publish resulsts as a seperate tab. ",
     "publisher": "JulianTotzek-Hallhuber",
-    "public": false,
+    "public": true,
     "content": {
         "details": {
             "path": "overview.md"
