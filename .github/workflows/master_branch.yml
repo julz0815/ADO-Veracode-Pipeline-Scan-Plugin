@@ -3,7 +3,7 @@
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
   schedule:
     - cron: '35 9 * * *'
 
