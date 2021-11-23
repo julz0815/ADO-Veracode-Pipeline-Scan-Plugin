@@ -1,4 +1,4 @@
-name: Main Branch Workflow with commit
+name: Main Branch Workflow with push
 
 on:
   push:
