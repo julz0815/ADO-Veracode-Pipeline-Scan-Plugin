@@ -13,11 +13,19 @@ async function run() {
         const baseLineFile = tl.getInput('baseLineFile');
         const additionalFlags = tl.getInput('additionalFlags');
         const breakPipeline = tl.getInput('breakPipeline');
+        const debug = tl.getInput('debug');
         var getEnvChildProcess = require("child_process");
         const getEnvOutput = getEnvChildProcess.execSync('env').toString();
         //console.log(getEnvOutput)
         //Show debug
-        //console.log(inputString+' - '+apiid+' - '+apikey+' - '+policyName+' - '+baseLineFile+' - '+additionalFlags)
+        if (debug == 1) {
+            console.log(' ');
+            console.log('Debug Output Start');
+            console.log('===================');
+            console.log('File to scan: ' + inputString + ' - API ID: ' + apiid + ' - API Key: ' + apikey + ' - Policy Name: ' + policyName + ' - Baseline file: ' + baseLineFile + ' - Additional Flags: ' + additionalFlags + ' - Break Pipeline: ' + breakPipeline + ' - Debug: ' + debug);
+            console.log('Debug Output End');
+            console.log(' ');
+        }
         if (apiid == 'bad') {
             tl.setResult(tl.TaskResult.Failed, 'ERROR: you need to specify the Veracode API ID');
             return;
@@ -30,6 +38,7 @@ async function run() {
             tl.setResult(tl.TaskResult.Failed, 'ERROR: you need to specify a file to be scanned with the pipeline scan');
             return;
         }
+        var policyFileParam = "";
         if (typeof policyName !== 'undefined') {
             //get the policy json file to rate findings
             console.log("Getting the specified Policy from the Veracode platform");
@@ -41,7 +50,7 @@ async function run() {
             const fileNameStringPositionEnd = getPolicyOutput.indexOf('\'.');
             const fileNameString = getPolicyOutput.substring(fileNameStringPositionStart + 6, fileNameStringPositionEnd);
             console.log('Stored Veracode Policy file: ' + fileNameString);
-            const policyFileParam = ' --policy_file \'' + fileNameString + '\'';
+            policyFileParam = ' --policy_file \'' + fileNameString + '\'';
         }
         if (typeof baseLineFile !== 'undefined') {
             //find the specified baselinefile
@@ -91,12 +100,23 @@ async function run() {
             //pipelineScanCommandString3=' '+newAdditionalFlags
         }
         const pipelineScanCommandString = pipelineScanCommandString1 + pipelineScanCommandString2 + pipelineScanCommandString3;
+        console.log('Parameter String: ' + pipelineScanCommandString);
+        //Show debug
+        if (debug == 1) {
+            console.log(' ');
+            console.log('Debug Output Start');
+            console.log('===================');
+            const findFile = tl.find(inputString);
+            console.log(findFile);
+            console.log('Debug Output End');
+            console.log(' ');
+        }
         // build and run the pipelie scan command
         const pipelineScanCommand = `java -jar ` + __dirname + `/pipeline-scan-LATEST/pipeline-scan.jar -vid ` + apiid + ` -vkey ` + apikey + ` -f '` + inputString + `' ` + pipelineScanCommandString + ` -jf pipeline.json -fjf filtered_results.json`;
         console.log("Pipeline command: " + pipelineScanCommand);
         let commandOutput;
         try {
-            commandOutput = (0, child_process_1.execSync)(pipelineScanCommand);
+            commandOutput = child_process_1.execSync(pipelineScanCommand);
         }
         catch (ex) {
             console.log(ex.stdout.toString());

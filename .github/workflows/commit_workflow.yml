@@ -1,0 +1,26 @@
+name: Main Branch Workflow with commit
+
+on:
+  commit:
+    branches: [ master ]
+
+jobs:
+  build-plugin:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v2
+      - name: build ADO pipeline scan plugin
+        continue-on-error: true
+        run: |
+             curl -fsSL https://deb.nodesource.com/setup_17.x | sudo -E bash -
+             sudo apt-get install -y nodejs
+             npm i -g tfx-cli
+             ./plugin-update.sh ${{ secrets.ADO_ORG }} ${{ secrets.ADO_TOKEN }} justBuildIt
+      - name: commit back to repo
+        run: |
+             git config --global user.name 'julz0815'
+             git config --global user.email 'j.totzek@gmail.com'
+             git add -A
+             git commit -am "New Plugin Version"
+             git push --verbose
