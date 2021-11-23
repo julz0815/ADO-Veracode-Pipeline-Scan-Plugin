@@ -2,7 +2,7 @@ name: Main Branch Workflow with push
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
 
 jobs:
   build-plugin:
