@@ -133,6 +133,7 @@ async function run() {
         const pipelineScanCommandString = pipelineScanCommandString1+pipelineScanCommandString2+pipelineScanCommandString3
         console.log('Parameter String: '+pipelineScanCommandString)
    
+   
         //Show debug
         if ( debug == 1){
             console.log(' ')
