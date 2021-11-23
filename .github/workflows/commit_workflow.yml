@@ -1,7 +1,7 @@
 name: Main Branch Workflow with commit
 
 on:
-  commit:
+  push:
     branches: [ master ]
 
 jobs:
