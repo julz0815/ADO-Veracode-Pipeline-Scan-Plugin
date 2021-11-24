@@ -117,7 +117,8 @@ async function run() {
             console.log(' ');
         }
         // build and run the pipelie scan command
-        const pipelineScanCommand = `java -jar ` + __dirname + `/pipeline-scan-LATEST/pipeline-scan.jar -vid ` + apiid + ` -vkey ` + apikey + ` -f ` + inputString + ` ` + pipelineScanCommandString + ` -jf pipeline.json -fjf filtered_results.json`;
+        const pipelineScanCommand = `java -jar ` + __dirname + `/pipeline-scan-LATEST/pipeline-scan.jar -vid ` + apiid + ` -vkey ` + apikey + ` -f "` + inputString + `" ` + pipelineScanCommandString + ` -jf pipeline.json -fjf filtered_results.json`;
+        //const pipelineScanCommand = `java -jar ${__dirname}${path.sep}pipeline-scan-LATEST${path.sep}pipeline-scan.jar -vid ${apiid} -vkey ${apikey} -f ${inputString} ${pipelineScanCommandString} -jf pipeline.json -fjf filtered_results.json`;
         console.log("Pipeline command: " + pipelineScanCommand);
         let commandOutput;
         try {
