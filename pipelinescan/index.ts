@@ -140,7 +140,7 @@ async function run() {
             console.log('Debug Output Start')
             console.log('===================')
             console.log('File Path: '+inputString)
-            var findFile2 = tl.find(inputString);
+            var findFile2 = await tl.find(inputString);
             console.log(findFile2)
             const dirCommand = execSync('dir D:\\a\\1\\a\\')
             console.log('Dir Command: '+dirCommand)
@@ -154,7 +154,7 @@ async function run() {
 
       
         // build and run the pipelie scan command
-        const pipelineScanCommand = `java -jar `+__dirname+`/pipeline-scan-LATEST/pipeline-scan.jar -vid `+apiid+` -vkey `+apikey+` -f '`+inputString+`' `+pipelineScanCommandString+` -jf pipeline.json -fjf filtered_results.json`;
+        const pipelineScanCommand = `java -jar `+__dirname+`/pipeline-scan-LATEST/pipeline-scan.jar -vid `+apiid+` -vkey `+apikey+` -f `+inputString+` `+pipelineScanCommandString+` -jf pipeline.json -fjf filtered_results.json`;
         console.log("Pipeline command: "+pipelineScanCommand)
         let commandOutput
         try {
