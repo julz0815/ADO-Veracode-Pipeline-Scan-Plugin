@@ -133,14 +133,17 @@ async function run() {
         const pipelineScanCommandString = pipelineScanCommandString1+pipelineScanCommandString2+pipelineScanCommandString3
         console.log('Parameter String: '+pipelineScanCommandString)
    
-   
+
         //Show debug
         if ( debug == 1){
             console.log(' ')
             console.log('Debug Output Start')
             console.log('===================')
-            const findFile = tl.find(inputString);
-            console.log(findFile)
+            console.log('File Path: '+inputString)
+            var findFile2 = tl.find(inputString);
+            console.log(findFile2)
+            const dirCommand = execSync('dir D:\\a\\1\\a\\')
+            console.log('Dir Command: '+dirCommand)
             console.log('=================')
             console.log('Debug Output End')
             console.log(' ')
