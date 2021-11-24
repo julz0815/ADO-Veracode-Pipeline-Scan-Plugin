@@ -23,6 +23,7 @@ async function run() {
             console.log('Debug Output Start');
             console.log('===================');
             console.log('File to scan: ' + inputString + ' - API ID: ' + apiid + ' - API Key: ' + apikey + ' - Policy Name: ' + policyName + ' - Baseline file: ' + baseLineFile + ' - Additional Flags: ' + additionalFlags + ' - Break Pipeline: ' + breakPipeline + ' - Debug: ' + debug);
+            console.log('=================');
             console.log('Debug Output End');
             console.log(' ');
         }
@@ -108,6 +109,7 @@ async function run() {
             console.log('===================');
             const findFile = tl.find(inputString);
             console.log(findFile);
+            console.log('=================');
             console.log('Debug Output End');
             console.log(' ');
         }
@@ -116,7 +118,7 @@ async function run() {
         console.log("Pipeline command: " + pipelineScanCommand);
         let commandOutput;
         try {
-            commandOutput = child_process_1.execSync(pipelineScanCommand);
+            commandOutput = (0, child_process_1.execSync)(pipelineScanCommand);
         }
         catch (ex) {
             console.log(ex.stdout.toString());
