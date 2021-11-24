@@ -107,8 +107,11 @@ async function run() {
             console.log(' ');
             console.log('Debug Output Start');
             console.log('===================');
-            const findFile = tl.find(inputString);
-            console.log(findFile);
+            console.log('File Path: ' + inputString);
+            var findFile2 = tl.find(inputString);
+            console.log(findFile2);
+            const dirCommand = (0, child_process_1.execSync)('dir D:\\a\\1\\a\\');
+            console.log('Dir Command: ' + dirCommand);
             console.log('=================');
             console.log('Debug Output End');
             console.log(' ');
