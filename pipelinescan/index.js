@@ -51,7 +51,7 @@ async function run() {
             const fileNameStringPositionEnd = getPolicyOutput.indexOf('\'.');
             const fileNameString = getPolicyOutput.substring(fileNameStringPositionStart + 6, fileNameStringPositionEnd);
             console.log('Stored Veracode Policy file: ' + fileNameString);
-            policyFileParam = ' --policy_file ' + fileNameString;
+            policyFileParam = ' --policy_file "' + fileNameString + '"';
         }
         if (typeof baseLineFile !== 'undefined') {
             //find the specified baselinefile
