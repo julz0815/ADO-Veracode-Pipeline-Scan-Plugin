@@ -30,11 +30,19 @@ if [ "$version_new" != "$version_old" ]; then
         sed -i "" "s/\"version\":.*/\"version\": \"0.0.$new_plugin_version\",/g" "./vss-extension.json"
         echo "Patching ./pipelinescan/task.json"
         sed -i "" "s/\"Patch\":.*/\"Patch\": $new_plugin_version/g" "./pipelinescan/task.json"
+        echo "Patching ./pipelinescan/package.json"
+        sed -i "" "s/\"version\":.*/\"version\": \"0.0.$new_plugin_version\",/g" "./pipelinescan/package.json"
+        echo "Patching ./package.json"
+        sed -i "" "s/\"version\":.*/\"version\": \"0.0.$new_plugin_version\",/g" "./package.json"
     else
         echo "Patching ./vss-extension.json"
         sed -i "s/\"version\":.*/\"version\": \"0.0.$new_plugin_version\",/g" "./vss-extension.json"
         echo "Patching ./pipelinescan/task.json"
         sed -i "s/\"Patch\":.*/\"Patch\": $new_plugin_version/g" "./pipelinescan/task.json"
+        echo "Patching ./pipelinescan/package.json"
+        sed -i "s/\"version\":.*/\"version\": \"0.0.$new_plugin_version\",/g" "./pipelinescan/package.json"
+        echo "Patching ./package.json"
+        sed -i "s/\"version\":.*/\"version\": \"0.0.$new_plugin_version\",/g" "./package.json"
     fi
 
 
@@ -72,11 +80,19 @@ else
             sed -i "" "s/\"version\":.*/\"version\": \"0.0.$new_plugin_version\",/g" "./vss-extension.json"
             echo "Patching ./pipelinescan/task.json"
             sed -i "" "s/\"Patch\":.*/\"Patch\": $new_plugin_version/g" "./pipelinescan/task.json"
+            echo "Patching ./pipelinescan/package.json"
+            sed -i "" "s/\"version\":.*/\"version\": \"0.0.$new_plugin_version\",/g" "./pipelinescan/package.json"
+            echo "Patching ./package.json"
+            sed -i "" "s/\"version\":.*/\"version\": \"0.0.$new_plugin_version\",/g" "./package.json"
         else
             echo "Patching ./vss-extension.json"
             sed -i "s/\"version\":.*/\"version\": \"0.0.$new_plugin_version\",/g" "./vss-extension.json"
             echo "Patching ./pipelinescan/task.json"
             sed -i "s/\"Patch\":.*/\"Patch\": $new_plugin_version/g" "./pipelinescan/task.json"
+            echo "Patching ./pipelinescan/package.json"
+            sed -i "s/\"version\":.*/\"version\": \"0.0.$new_plugin_version\",/g" "./pipelinescan/package.json"
+            echo "Patching ./package.json"
+            sed -i "s/\"version\":.*/\"version\": \"0.0.$new_plugin_version\",/g" "./package.json"
         fi
 
         #build the plugin

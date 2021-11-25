@@ -142,8 +142,6 @@ async function run() {
             console.log('File Path: '+inputString)
             var findFile2 = await tl.find(inputString);
             console.log(findFile2)
-            const dirCommand = execSync('dir D:\\a\\1\\a\\')
-            console.log('Dir Command: '+dirCommand)
             console.log('=================')
             console.log('Debug Output End')
             console.log(' ')
