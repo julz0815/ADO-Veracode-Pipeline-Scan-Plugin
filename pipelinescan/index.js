@@ -13,6 +13,11 @@ async function run() {
         const baseLineFile = tl.getInput('baseLineFile');
         const additionalFlags = tl.getInput('additionalFlags');
         const breakPipeline = tl.getInput('breakPipeline');
+        const baselineFileGeneration = tl.getInput('baselineFileGeneration');
+        const baselineFileStorageProject = tl.getInput('baselineFileStorageProject');
+        const baselineFileStorageBranch = tl.getInput('baselineFileStorageBranch');
+        const baselineFileNewNameOptions = tl.getInput('baselineFileNewNameOptions');
+        const baselineFileNewName = tl.getInput('baselineFileNewName');
         const debug = tl.getInput('debug');
         var getEnvChildProcess = require("child_process");
         const getEnvOutput = getEnvChildProcess.execSync('env').toString();
@@ -22,7 +27,7 @@ async function run() {
             console.log(' ');
             console.log('Debug Output Start');
             console.log('===================');
-            console.log('File to scan: ' + inputString + ' - API ID: ' + apiid + ' - API Key: ' + apikey + ' - Policy Name: ' + policyName + ' - Baseline file: ' + baseLineFile + ' - Additional Flags: ' + additionalFlags + ' - Break Pipeline: ' + breakPipeline + ' - Debug: ' + debug);
+            console.log('File to scan: ' + inputString + ' - API ID: ' + apiid + ' - API Key: ' + apikey + ' - Policy Name: ' + policyName + ' - Baseline file: ' + baseLineFile + ' - Additional Flags: ' + additionalFlags + ' - Break Pipeline: ' + breakPipeline + ' - Debug: ' + debug + ' - baselineFileGeneration: ' + baselineFileGeneration + ' - baselineFileStorageProject:' + baselineFileStorageProject + ' - baselineFileStorageBranch: ' + baselineFileStorageBranch + ' - baselineFileNewNameOptions: ' + baselineFileNewNameOptions + ' - baselineFileNewName: ' + baselineFileNewName);
             console.log('=================');
             console.log('Debug Output End');
             console.log(' ');
@@ -120,7 +125,7 @@ async function run() {
         console.log("Pipeline command: " + pipelineScanCommand);
         let commandOutput;
         try {
-            commandOutput = (0, child_process_1.execSync)(pipelineScanCommand);
+            commandOutput = child_process_1.execSync(pipelineScanCommand);
         }
         catch (ex) {
             console.log(ex.stdout.toString());
@@ -146,6 +151,30 @@ async function run() {
         fs.writeFileSync(outputFileName, fullReportString);
         //const newhtmlPath: string | undefined = tl.getInput('htmlPath', false);
         console.log('##vso[task.addattachment type=replacedhtml;name=content;]' + outputFileName);
+        //If baseline file generation is true store the baseline file to specified location
+        if (baselineFileGeneration == 'true') {
+            //store the baseline file somewhere
+            //Show debug
+            if (debug == 1) {
+                console.log(' ');
+                console.log('Debug Output Start');
+                console.log('===================');
+                console.log('Baseline File Storage Project ' + baselineFileStorageProject);
+                console.log('Baseline File Storag Branch ' + baselineFileStorageBranch);
+                console.log('Baseline File Name Options ' + baselineFileNewNameOptions);
+                console.log('Baseline File Name' + baselineFileNewName);
+                console.log('=================');
+                console.log('Debug Output End');
+                console.log(' ');
+            }
+            export async function run() {
+                let webApi = await common.getWebApi();
+                let gitApiObject = await webApi.getGitApi();
+                common.banner("Get Project");
+                let project = common.getProject();
+                console.log("Project:", project);
+            }
+        }
         if (breakPipeline == 'true') {
             if (numberOfVulns > 0) {
                 console.log('Pipeline scan flagged "' + numberOfVulns + '" findings. Pipeline will not continoue.');

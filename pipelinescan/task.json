@@ -1,18 +1,30 @@
 {
     "$schema": "https://raw.githubusercontent.com/Microsoft/azure-pipelines-task-lib/master/tasks.schema.json",
-    "id": "99e8d79d-febd-4f2e-b2df-da8f8257b59c",
-    "name": "VeracodePipelineScan",
-    "friendlyName": "VeracodePipelineScan",
+    "id": "99e8d79d-febd-4f2e-b2df-da8f8257b59d",
+    "name": "VeracodePipelineScanFeature",
+    "friendlyName": "VeracodePipelineScanFeature",
     "description": "An extension which lets you run Veracode's pipeline scan and publish resulsts as a seperate tab. ",
     "helpMarkDown": "",
     "category": "Utility",
     "author": "JulianTotzek-Hallhuber",
     "version": {
         "Major": 0,
-        "Minor": 0,
-        "Patch": 115
+        "Minor": 1,
+        "Patch": 7
     },
     "instanceNameFormat": "VeracodePipelineScan",
+    "groups": [
+        {
+            "name": "baselineFile",
+            "displayName": "Baseline File",
+            "isExpanded": true
+        },
+        {
+            "name": "advanced",
+            "displayName": "Advanced",
+            "isExpanded": true
+        }
+    ],
     "inputs": [
         {
             "name": "VeracodeAPIID",
@@ -46,28 +58,96 @@
             "helpMarkDown": "Veracode pipeline scna allowes to rate the findings according a platform policy. Please name the Veracode policy to download before the scan and rate the results accordingly"
         },
         {
-            "name": "baselineFile",
-            "type": "string",
-            "label": "Baseline File",
-            "defaultValue": "",
-            "required": false,
-            "helpMarkDown": "A pipeline scan baseline file to sort out previous findings. Veracode pipeline scan allows to sort out previous findings. This file is called a baseline file and need to be present on your repository."
-        },
-        {
-            "name": "additionalFlags",
-            "type": "string",
-            "label": "Additional Flags",
-            "defaultValue": "",
-            "required": false,
-            "helpMarkDown": "Additional flags to be applied to the pipeline scan, please review https://help.veracode.com/r/r_pipeline_scan_commands for options."
-        },
-        {
             "name": "breakPipeline",
             "type": "boolean",
             "label": "Break the pipeline upon findings",
             "defaultValue": "",
             "required": false,
             "helpMarkDown": "Break the pipeline if the pipeline scan found security coding defects."
+        },
+        {
+            "name": "baselineFile",
+            "type": "string",
+            "label": "Old baseline File to sort out findings",
+            "defaultValue": "",
+            "groupName": "baselineFile",
+            "required": false,
+            "helpMarkDown": "A pipeline scan baseline file to sort out previous findings. Veracode pipeline scan allows to sort out previous findings. This file is called a baseline file and need to be present on your repository."
+        },
+        {
+            "name": "baselineFileGeneration",
+            "type": "boolean",
+            "label": "Generate a new Baseline File from scan",
+            "defaultValue": "",
+            "groupName": "baselineFile",
+            "required": false,
+            "helpMarkDown": "Create a new baseline file from the actual scan that can be used later on to sort out previously flagged findings."
+        },
+        {
+            "name": "baselineFileStorageProject",
+            "type": "pickList",
+            "label": "Which project to store the newly generated baseline file",
+            "defaultValue": "",
+            "groupName": "baselineFile",
+            "required": false,
+            "properties": {
+                "EditableOptions": "True",
+                "DisableManageLink": "True"
+            },
+            "helpMarkDown": "The project where to store the newly generated baseline file."
+        },
+        {
+            "name": "baselineFileStorageBranch",
+            "type": "string",
+            "label": "Which branch on the project to store the baseline file.",
+            "defaultValue": "refs/heads/master",
+            "groupName": "baselineFile",
+            "required": false,
+            "helpMarkDown": "The branch of the project where to store the newly generated baseline file."
+        },
+        {
+            "name": "baselineFileNewNameOptions",
+            "type": "radio",
+            "label": "New baseline Fiel name",
+            "defaultValue": "filtered",
+            "required": false,
+            "groupName": "baselineFile",
+            "options": {
+                "standard": "Use standard (pipeline.json)",
+                "filtered": "Use filtered (filtered_results.json)",
+                "specific": "your name"
+            },
+            "helpMarkDown": "Which filenmane to be applied for the new baseline file"
+        },
+        {
+            "name": "baselineFileNewName",
+            "type": "string",
+            "label": "The baseline file name.",
+            "visibleRule": "baselineFileNewNameOptions == specific",
+            "groupName": "baselineFile",
+            "required": false,
+            "helpMarkDown": "Your own baseline file name."
+        },
+        {
+            "name": "additionalFlags",
+            "type": "string",
+            "label": "Additional Flags",
+            "defaultValue": "",
+            "groupName": "advanced",
+            "required": false,
+            "helpMarkDown": "Additional flags to be applied to the pipeline scan, please review https://help.veracode.com/r/r_pipeline_scan_commands for options."
+        }
+    ],
+    "dataSourceBindings": [
+        {
+            "endpointId": "tfs:teamfoundation",
+            "target": "baselineFileStorageProject",
+            "endpointUrl": "{{endpoint.url}}/_apis/projects?$skip={{skip}}&$top=1000",
+            "resultSelector": "jsonpath:$.value[?(@.state=='wellFormed')]",
+            "resultTemplate": "{ \"Value\" : \"{{{id}}}\", \"DisplayValue\" : \"{{{name}}}\" }",
+            "callbackContextTemplate": "{\"skip\": \"{{add skip 1000}}\"}",
+            "callbackRequiredTemplate": "{{isEqualNumber result.count 1000}}",
+            "initialContextTemplate": "{\"skip\": \"0\"}"
         }
     ],
     "execution": {

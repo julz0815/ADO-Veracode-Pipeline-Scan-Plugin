@@ -27,22 +27,22 @@ if [ "$version_new" != "$version_old" ]; then
     #patch the file with new version
     if [[ "$OSTYPE" == "darwin"* ]]; then
         echo "Patching ./vss-extension.json"
-        sed -i "" "s/\"version\":.*/\"version\": \"0.0.$new_plugin_version\",/g" "./vss-extension.json"
+        sed -i "" "s/\"version\":.*/\"version\": \"0.1.$new_plugin_version\",/g" "./vss-extension.json"
         echo "Patching ./pipelinescan/task.json"
         sed -i "" "s/\"Patch\":.*/\"Patch\": $new_plugin_version/g" "./pipelinescan/task.json"
         echo "Patching ./pipelinescan/package.json"
-        sed -i "" "s/\"version\":.*/\"version\": \"0.0.$new_plugin_version\",/g" "./pipelinescan/package.json"
+        sed -i "" "s/\"version\":.*/\"version\": \"0.1.$new_plugin_version\",/g" "./pipelinescan/package.json"
         echo "Patching ./package.json"
-        sed -i "" "s/\"version\":.*/\"version\": \"0.0.$new_plugin_version\",/g" "./package.json"
+        sed -i "" "s/\"version\":.*/\"version\": \"0.1.$new_plugin_version\",/g" "./package.json"
     else
         echo "Patching ./vss-extension.json"
-        sed -i "s/\"version\":.*/\"version\": \"0.0.$new_plugin_version\",/g" "./vss-extension.json"
+        sed -i "s/\"version\":.*/\"version\": \"0.1.$new_plugin_version\",/g" "./vss-extension.json"
         echo "Patching ./pipelinescan/task.json"
         sed -i "s/\"Patch\":.*/\"Patch\": $new_plugin_version/g" "./pipelinescan/task.json"
         echo "Patching ./pipelinescan/package.json"
-        sed -i "s/\"version\":.*/\"version\": \"0.0.$new_plugin_version\",/g" "./pipelinescan/package.json"
+        sed -i "s/\"version\":.*/\"version\": \"0.1.$new_plugin_version\",/g" "./pipelinescan/package.json"
         echo "Patching ./package.json"
-        sed -i "s/\"version\":.*/\"version\": \"0.0.$new_plugin_version\",/g" "./package.json"
+        sed -i "s/\"version\":.*/\"version\": \"0.1.$new_plugin_version\",/g" "./package.json"
     fi
 
 
@@ -56,10 +56,10 @@ if [ "$version_new" != "$version_old" ]; then
     tsc
     cd ..
     npm run build
-    copy_file=$(mv ./JulianTotzek-Hallhuber.VeracodePipelineScan-0.0.$new_plugin_version.vsix ./builds)
+    copy_file=$(mv ./JulianTotzek-Hallhuber.VeracodePipelineScanFeature-0.1.$new_plugin_version.vsix ./builds)
 
     # Publish to market place
-    tfx extension publish --vsix "builds/JulianTotzek-Hallhuber.VeracodePipelineScan-0.0.$new_plugin_version.vsix" --share-with $1 --token $2
+    tfx extension publish --vsix "builds/JulianTotzek-Hallhuber.VeracodePipelineScanFeature-0.1.$new_plugin_version.vsix" --share-with $1 --token $2
 
 else
     echo "No new version of the pipeline scan found! Checking if plugin should be updated."
@@ -77,22 +77,22 @@ else
         #patch the file with new version
         if [[ "$OSTYPE" == "darwin"* ]]; then
             echo "Patching ./vss-extension.json"
-            sed -i "" "s/\"version\":.*/\"version\": \"0.0.$new_plugin_version\",/g" "./vss-extension.json"
+            sed -i "" "s/\"version\":.*/\"version\": \"0.1.$new_plugin_version\",/g" "./vss-extension.json"
             echo "Patching ./pipelinescan/task.json"
             sed -i "" "s/\"Patch\":.*/\"Patch\": $new_plugin_version/g" "./pipelinescan/task.json"
             echo "Patching ./pipelinescan/package.json"
-            sed -i "" "s/\"version\":.*/\"version\": \"0.0.$new_plugin_version\",/g" "./pipelinescan/package.json"
+            sed -i "" "s/\"version\":.*/\"version\": \"0.1.$new_plugin_version\",/g" "./pipelinescan/package.json"
             echo "Patching ./package.json"
-            sed -i "" "s/\"version\":.*/\"version\": \"0.0.$new_plugin_version\",/g" "./package.json"
+            sed -i "" "s/\"version\":.*/\"version\": \"0.1.$new_plugin_version\",/g" "./package.json"
         else
             echo "Patching ./vss-extension.json"
-            sed -i "s/\"version\":.*/\"version\": \"0.0.$new_plugin_version\",/g" "./vss-extension.json"
+            sed -i "s/\"version\":.*/\"version\": \"0.1.$new_plugin_version\",/g" "./vss-extension.json"
             echo "Patching ./pipelinescan/task.json"
             sed -i "s/\"Patch\":.*/\"Patch\": $new_plugin_version/g" "./pipelinescan/task.json"
             echo "Patching ./pipelinescan/package.json"
-            sed -i "s/\"version\":.*/\"version\": \"0.0.$new_plugin_version\",/g" "./pipelinescan/package.json"
+            sed -i "s/\"version\":.*/\"version\": \"0.1.$new_plugin_version\",/g" "./pipelinescan/package.json"
             echo "Patching ./package.json"
-            sed -i "s/\"version\":.*/\"version\": \"0.0.$new_plugin_version\",/g" "./package.json"
+            sed -i "s/\"version\":.*/\"version\": \"0.1.$new_plugin_version\",/g" "./package.json"
         fi
 
         #build the plugin
@@ -100,10 +100,10 @@ else
         tsc
         cd ..
         npm run build
-        copy_file=$(mv ./JulianTotzek-Hallhuber.VeracodePipelineScan-0.0.$new_plugin_version.vsix ./builds)
+        copy_file=$(mv ./JulianTotzek-Hallhuber.VeracodePipelineScanFeature-0.1.$new_plugin_version.vsix ./builds)
 
         # Publish to market place
-        tfx extension publish --vsix "builds/JulianTotzek-Hallhuber.VeracodePipelineScan-0.0.$new_plugin_version.vsix" --share-with $1 --token $2
+        tfx extension publish --vsix "builds/JulianTotzek-Hallhuber.VeracodePipelineScanFeature-0.1.$new_plugin_version.vsix" --share-with $1 --token $2
     else
         echo "No code update done, no plugin update needed"
     fi

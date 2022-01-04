@@ -1,10 +1,14 @@
 import tl = require('azure-pipelines-task-lib/task');
 import trm from 'azure-pipelines-task-lib/toolrunner';
+import * as nodeApi from "azure-devops-node-api";
+import * as GitApi from "azure-devops-node-api/GitApi";
+import * as GitInterfaces from "azure-devops-node-api/interfaces/GitInterfaces";
 import cheerio = require('cheerio');
 import { execSync } from 'child_process';
 import { Console } from 'console';
 import fs = require('fs')
 import { stringify } from 'querystring';
+import { GitHttpClient4_1 } from 'TFS/VersionControl/GitRestClient';
 
 async function run() {
 
@@ -22,6 +26,11 @@ async function run() {
         const baseLineFile = tl.getInput('baseLineFile');
         const additionalFlags = tl.getInput('additionalFlags');
         const breakPipeline = tl.getInput('breakPipeline');
+        const baselineFileGeneration = tl.getInput('baselineFileGeneration');
+        const baselineFileStorageProject = tl.getInput('baselineFileStorageProject');
+        const baselineFileStorageBranch = tl.getInput('baselineFileStorageBranch');
+        const baselineFileNewNameOptions = tl.getInput('baselineFileNewNameOptions');
+        const baselineFileNewName = tl.getInput('baselineFileNewName');
         const debug = tl.getInput('debug');
 
 
@@ -35,7 +44,7 @@ async function run() {
             console.log(' ')
             console.log('Debug Output Start')
             console.log('===================')
-            console.log('File to scan: '+inputString+' - API ID: '+apiid+' - API Key: '+apikey+' - Policy Name: '+policyName+' - Baseline file: '+baseLineFile+' - Additional Flags: '+additionalFlags+' - Break Pipeline: '+breakPipeline+' - Debug: '+debug)
+            console.log('File to scan: '+inputString+' - API ID: '+apiid+' - API Key: '+apikey+' - Policy Name: '+policyName+' - Baseline file: '+baseLineFile+' - Additional Flags: '+additionalFlags+' - Break Pipeline: '+breakPipeline+' - Debug: '+debug+' - baselineFileGeneration: '+baselineFileGeneration+' - baselineFileStorageProject:'+baselineFileStorageProject+' - baselineFileStorageBranch: '+baselineFileStorageBranch+' - baselineFileNewNameOptions: '+baselineFileNewNameOptions+' - baselineFileNewName: '+baselineFileNewName)
             console.log('=================')
             console.log('Debug Output End')
             console.log(' ')
@@ -130,6 +139,7 @@ async function run() {
             //to correctly work, bad param checks is disabled for now.
             //pipelineScanCommandString3=' '+newAdditionalFlags
         }
+
         const pipelineScanCommandString = pipelineScanCommandString1+pipelineScanCommandString2+pipelineScanCommandString3
         console.log('Parameter String: '+pipelineScanCommandString)
    
@@ -193,6 +203,33 @@ async function run() {
 
         //const newhtmlPath: string | undefined = tl.getInput('htmlPath', false);
         console.log('##vso[task.addattachment type=replacedhtml;name=content;]' + outputFileName!);
+
+        //If baseline file generation is true store the baseline file to specified location
+        if (baselineFileGeneration == 'true') {
+            //store the baseline file somewhere
+            //Show debug
+            if ( debug == 1){
+                console.log(' ')
+                console.log('Debug Output Start')
+                console.log('===================')
+                console.log('Baseline File Storage Project '+baselineFileStorageProject)
+                console.log('Baseline File Storag Branch '+baselineFileStorageBranch)
+                console.log('Baseline File Name Options '+baselineFileNewNameOptions)
+                console.log('Baseline File Name'+baselineFileNewName)
+                console.log('=================')
+                console.log('Debug Output End')
+                console.log(' ')
+            }
+            export async function run() {
+                let webApi: nodeApi.WebApi = await common.getWebApi();
+                let gitApiObject: GitApi.IGitApi = await webApi.getGitApi();
+            
+                common.banner("Get Project");
+                let project = common.getProject();
+                console.log("Project:", project);
+            }
+
+        }
 
 
         if ( breakPipeline == 'true' ){

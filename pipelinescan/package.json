@@ -1,6 +1,6 @@
 {
-  "name": "veracodepipelinescan",
-  "version": "0.0.115",
+  "name": "VeracodePipelineScanFeature",
+  "version": "0.1.7",
   "description": "",
   "main": "index.js",
   "scripts": {
