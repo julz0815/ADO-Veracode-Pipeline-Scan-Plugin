@@ -1,6 +1,26 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const tl = require("azure-pipelines-task-lib/task");
+const azdev = __importStar(require("azure-devops-node-api"));
 const child_process_1 = require("child_process");
 const fs = require("fs");
 async function run() {
@@ -167,13 +187,58 @@ async function run() {
                 console.log('Debug Output End');
                 console.log(' ');
             }
-            export async function run() {
-                let webApi = await common.getWebApi();
-                let gitApiObject = await webApi.getGitApi();
-                common.banner("Get Project");
-                let project = common.getProject();
-                console.log("Project:", project);
+            let orgUrl = 'https://dev.azure.com/jtotzek';
+            let repostories;
+            let token = "ACCESS_TOKEN"; //patToken 
+            let project = 'Verademo_YML';
+            let repostoryName = 'Verademo_YML';
+            let authHandler = azdev.getPersonalAccessTokenHandler(token);
+            console.log('AuthHandle: ' + authHandler);
+            let connection = new azdev.WebApi(orgUrl, authHandler);
+            console.log('Connection: ' + connection);
+            let file = __dirname + 'filtered_results.json"';
+            let refName = 'refs/heads/development';
+            async function runPush(filePath, refName, project, repostoryName) {
+                let git = await connection.getGitApi();
+                repostories = await git.getRepositories(project);
+                console.log('Repositories: ' + repostories);
+                let gitrepo = repostories.find(element => element.name === repostoryName);
+                console.log('GitRepo: ' + gitrepo);
+                /*
+                let repostoryId = gitrepo?.id;
+                let gitChanges:GitChange[] = [<GitChange>{
+                    changeType:1,
+                    newContent:<ItemContent>{content:base64str,contentType:0 }, //0-> RawText = 0, Base64Encoded = 1,
+                    item:<GitItem>{
+                        path:'/testUpdate.png'
+                    }
+                }];
+                if(typeof(repostoryId) ==="string")
+                {
+                let ref = (await git.getRefs(repostoryId,project)).find(element => element.name === refName)
+                let refUpdates:GitRefUpdate[] = [<GitRefUpdate> {
+                    name:ref?.name,
+                    oldObjectId:ref?.objectId //get ref->object id
+                }];
+
+                let gitCommitRef:GitCommitRef[] = [
+                    <GitCommitRef>{
+                        changes:gitChanges,
+                        comment:'Add a file'
+                    }
+                ]
+                let gitPush:GitPush = <GitPush>{
+                    commits:gitCommitRef,
+                    refUpdates:refUpdates,
+                    repository:gitrepo
+                };
+                console.log(repostoryId)
+                await git.createPush(gitPush,repostoryId,project);
+
+                }
+                */
             }
+            runPush(file, refName, project, repostoryName);
         }
         if (breakPipeline == 'true') {
             if (numberOfVulns > 0) {

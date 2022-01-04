@@ -1,8 +1,8 @@
 import tl = require('azure-pipelines-task-lib/task');
 import trm from 'azure-pipelines-task-lib/toolrunner';
-import * as nodeApi from "azure-devops-node-api";
-import * as GitApi from "azure-devops-node-api/GitApi";
-import * as GitInterfaces from "azure-devops-node-api/interfaces/GitInterfaces";
+import * as azdev from "azure-devops-node-api";
+import * as gitclient from "azure-devops-node-api/GitApi";
+import { GitRepository, GitPush,GitCommitRef,GitCommit, GitChange, ItemContent, GitItem, GitRefUpdate } from 'azure-devops-node-api/interfaces/GitInterfaces';
 import cheerio = require('cheerio');
 import { execSync } from 'child_process';
 import { Console } from 'console';
@@ -220,14 +220,76 @@ async function run() {
                 console.log('Debug Output End')
                 console.log(' ')
             }
-            export async function run() {
-                let webApi: nodeApi.WebApi = await common.getWebApi();
-                let gitApiObject: GitApi.IGitApi = await webApi.getGitApi();
+
+
             
-                common.banner("Get Project");
-                let project = common.getProject();
-                console.log("Project:", project);
+            let orgUrl = 'https://dev.azure.com/jtotzek'
+            let repostories:GitRepository[];            
+            let token: string = "ACCESS_TOKEN";//patToken 
+            let project:string = 'Verademo_YML'
+            let repostoryName = 'Verademo_YML';
+            let authHandler = azdev.getPersonalAccessTokenHandler(token);
+            console.log('AuthHandle: '+authHandler)
+            let connection = new azdev.WebApi(orgUrl, authHandler);
+            console.log('Connection: '+connection)
+            let file:string = __dirname+'filtered_results.json"';
+            let refName:string = 'refs/heads/development';
+
+            async function runPush(filePath:string,refName:string,project:string,repostoryName:string)
+            {  
+                let git:gitclient.IGitApi = await connection.getGitApi();
+                repostories = await git.getRepositories(project);
+                console.log('Repositories: '+repostories)
+                let gitrepo = repostories.find(element => element.name === repostoryName);
+                console.log('GitRepo: '+gitrepo)
+
+                /*
+                let repostoryId = gitrepo?.id;
+                let gitChanges:GitChange[] = [<GitChange>{
+                    changeType:1,
+                    newContent:<ItemContent>{content:base64str,contentType:0 }, //0-> RawText = 0, Base64Encoded = 1,
+                    item:<GitItem>{
+                        path:'/testUpdate.png'
+                    }
+                }];
+                if(typeof(repostoryId) ==="string")
+                {
+                let ref = (await git.getRefs(repostoryId,project)).find(element => element.name === refName)
+                let refUpdates:GitRefUpdate[] = [<GitRefUpdate> {
+                    name:ref?.name,
+                    oldObjectId:ref?.objectId //get ref->object id
+                }];
+
+                let gitCommitRef:GitCommitRef[] = [
+                    <GitCommitRef>{
+                        changes:gitChanges,
+                        comment:'Add a file'
+                    }
+                ]
+                let gitPush:GitPush = <GitPush>{
+                    commits:gitCommitRef,
+                    refUpdates:refUpdates,
+                    repository:gitrepo
+                };
+                console.log(repostoryId)
+                await git.createPush(gitPush,repostoryId,project);
+
+                }
+                */
+
             }
+            runPush(file,refName,project,repostoryName);
+
+
+
+
+
+
+
+
+
+
+
 
         }
 
