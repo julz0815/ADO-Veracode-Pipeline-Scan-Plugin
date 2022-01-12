@@ -10,8 +10,9 @@
     "version": {
         "Major": 0,
         "Minor": 1,
-        "Patch": 19
+        "Patch": 158
     },
+    "showEnvironmentVariables": true,
     "instanceNameFormat": "VeracodePipelineScan",
     "groups": [
         {
@@ -97,33 +98,48 @@
             "helpMarkDown": "The project where to store the newly generated baseline file."
         },
         {
-            "name": "baselineFileStorageBranch",
-            "type": "string",
-            "label": "Which branch on the project to store the baseline file.",
-            "defaultValue": "refs/heads/master",
+            "name": "baselineFileStorageReponame",
+            "type": "pickList",
+            "label": "Which repository to store the newly generated baseline file",
+            "defaultValue": "",
             "groupName": "baselineFile",
             "required": false,
+            "properties": {
+                "EditableOptions": "True",
+                "DisableManageLink": "True"
+            },
+            "helpMarkDown": "The repository within the project where to store the newly generated baseline file."
+        },
+        {
+            "name": "baselineFileStorageBranch",
+            "type": "pickList",
+            "label": "Which branch on the project to store the baseline file.",
+            "defaultValue": "",
+            "groupName": "baselineFile",
+            "required": false,
+            "properties": {
+                "EditableOptions": "True",
+                "DisableManageLink": "True"
+            },
             "helpMarkDown": "The branch of the project where to store the newly generated baseline file."
         },
         {
-            "name": "baselineFileNewNameOptions",
+            "name": "baselineFileOptions",
             "type": "radio",
-            "label": "New baseline Fiel name",
-            "defaultValue": "filtered",
+            "label": "Which results to be used to generated baseline file",
             "required": false,
             "groupName": "baselineFile",
             "options": {
-                "standard": "Use standard (pipeline.json)",
-                "filtered": "Use filtered (filtered_results.json)",
-                "specific": "your name"
+                "standard": "Use standard, full results (pipeline.json)",
+                "filtered": "Use filtered results (filtered_results.json)"
             },
             "helpMarkDown": "Which filenmane to be applied for the new baseline file"
         },
         {
             "name": "baselineFileNewName",
             "type": "string",
-            "label": "The baseline file name.",
-            "visibleRule": "baselineFileNewNameOptions == specific",
+            "label": "The baseline file name and path to store on your repository.",
+            "defaultValue": "/pipeline-baseline-file.json",
             "groupName": "baselineFile",
             "required": false,
             "helpMarkDown": "Your own baseline file name."
@@ -144,7 +160,34 @@
             "target": "baselineFileStorageProject",
             "endpointUrl": "{{endpoint.url}}/_apis/projects?$skip={{skip}}&$top=1000",
             "resultSelector": "jsonpath:$.value[?(@.state=='wellFormed')]",
-            "resultTemplate": "{ \"Value\" : \"{{{id}}}\", \"DisplayValue\" : \"{{{name}}}\" }",
+            "resultTemplate": "{ \"Value\" : \"{{{name}}}\", \"DisplayValue\" : \"{{{name}}}\" }",
+            "callbackContextTemplate": "{\"skip\": \"{{add skip 1000}}\"}",
+            "callbackRequiredTemplate": "{{isEqualNumber result.count 1000}}",
+            "initialContextTemplate": "{\"skip\": \"0\"}"
+        },
+        {
+            "endpointId": "tfs:teamfoundation",
+            "target": "baselineFileStorageReponame",
+            "endpointUrl": "{{endpoint.url}}/{{project}}/_apis/git/repositories",
+            "resultSelector": "jsonpath:$.value[?(@.project.state=='wellFormed')]",
+            "parameters": {
+                "project": "$(baselineFileStorageProject)"
+            },
+            "resultTemplate": "{ \"Value\" : \"{{{name}}}\", \"DisplayValue\" : \"{{{name}}}\" }",
+            "callbackContextTemplate": "{\"skip\": \"{{add skip 1000}}\"}",
+            "callbackRequiredTemplate": "{{isEqualNumber result.count 1000}}",
+            "initialContextTemplate": "{\"skip\": \"0\"}"
+        },
+        {
+            "endpointId": "tfs:teamfoundation",
+            "target": "baselineFileStorageBranch",
+            "endpointUrl": "{{endpoint.url}}/{{project}}/_apis/git/repositories/{{repoID}}/refs",
+            "resultSelector": "jsonpath:$.value[*]",
+            "parameters": {
+                "project": "$(baselineFileStorageProject)",
+                "repoID": "$(baselineFileStorageReponame)"
+            },
+            "resultTemplate": "{ \"Value\" : \"{{{name}}}\", \"DisplayValue\" : \"{{{name}}}\" }",
             "callbackContextTemplate": "{\"skip\": \"{{add skip 1000}}\"}",
             "callbackRequiredTemplate": "{{isEqualNumber result.count 1000}}",
             "initialContextTemplate": "{\"skip\": \"0\"}"

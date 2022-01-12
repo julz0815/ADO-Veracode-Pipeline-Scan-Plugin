@@ -39,11 +39,60 @@ Example
     fileToScan: '$(System.DefaultWorkingDirectory)/target/verademo.war'  
 ```    
 The values you see here are also presets of the plugin and need to be adjust to fit your environment and application architecture.  
+![](/images/Standard_Config.png)  
 
 ### 3. Publish the pipeline scan report on ypur Azure DevOps pipeline summery.
-The plugin will automatically create a report on your Azure DevOps pipelie summery page for better review.  
-
-### 4. Things to come in the future  
+The plugin will automatically create a report on your Azure DevOps pipeline summery page for better review.  
+  
+### 4. Working with Pipeline Scan baseline file  
+From version 1.x the plugin supports the generation and storage of a new baseline file.  
+There are a few options to be set to work properly.  
+  
+Once the tickbox "Generate a new Baseline File from scan" you need to set the following options correspondingly.  
+- select your project name to store the new baseline file on
+- select your repository to store the new basleine file on  
+- select the branch to store the new baseline file on  
+These 2 pulldowns will autopopulate according the previous selection.  
+  
+You need to choose which results should be used to create the new baseline file.  
+The two options are  
+- standard - full results  
+- filtered - filtered results  
+  
+**Standard** will simply use all results found from the pipeline scan.  
+**Filtered** will use the filtered results. For example if you want to fail on severity, CWE or simialr. Only these results will be used to generate the new baseline file. This is default option.    
+  
+**IMPORTANT NOTE**  
+You need the Git 'GenericContribute' permission to perform this action.   
+**IMPORTANT NOTE**  
+  
+Example
+```
+- task: VeracodePipelineScanFeature@0
+  inputs:
+    VeracodeAPIID: '$(vid)'
+    VeracodeAPIsecret: '$(vkey)'
+    fileToScan: '$(System.DefaultWorkingDirectory)/target/verademo.war'
+    baselineFileGeneration: true
+    baselineFileStorageProject: 'Verademo_YML'
+    baselineFileStorageReponame: 'Verademo_YML'
+    baselineFileStorageBranch: 'refs/heads/development'
+    baselineFileOptions: 'filtered'
+```
+  
+Also make sure you don't run the pipeline again when the baseline file is pushed to your branch. Otherwise you will start to run a loop   
+The yml part for that may looks like this:  
+Example
+```
+trigger:
+  branches:
+    include: [development]
+  paths:
+    exclude: ["pipeline-baseline-file.json"]
+```  
+![](/images/Baseline_Config.png)  
+  
+### 5. Things to come in the future  
 Future update that are planned include  
 - Work itmes generation  
 - Report sorting  

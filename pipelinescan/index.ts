@@ -2,13 +2,16 @@ import tl = require('azure-pipelines-task-lib/task');
 import trm from 'azure-pipelines-task-lib/toolrunner';
 import * as azdev from "azure-devops-node-api";
 import * as gitclient from "azure-devops-node-api/GitApi";
-import { GitRepository, GitPush,GitCommitRef,GitCommit, GitChange, ItemContent, GitItem, GitRefUpdate } from 'azure-devops-node-api/interfaces/GitInterfaces';
+import { GitRepository, GitPush, GitCommitRef, GitCommit, GitChange, ItemContent, GitItem, GitRefUpdate } from 'azure-devops-node-api/interfaces/GitInterfaces';
 import cheerio = require('cheerio');
 import { execSync } from 'child_process';
 import { Console } from 'console';
 import fs = require('fs')
 import { stringify } from 'querystring';
 import { GitHttpClient4_1 } from 'TFS/VersionControl/GitRestClient';
+import Axios = require('axios');
+import { containsControlChars } from 'VSS/Utils/String';
+
 
 async function run() {
 
@@ -29,8 +32,10 @@ async function run() {
         const baselineFileGeneration = tl.getInput('baselineFileGeneration');
         const baselineFileStorageProject = tl.getInput('baselineFileStorageProject');
         const baselineFileStorageBranch = tl.getInput('baselineFileStorageBranch');
-        const baselineFileNewNameOptions = tl.getInput('baselineFileNewNameOptions');
+        const baselineFileOptions = tl.getInput('baselineFileOptions');
         const baselineFileNewName = tl.getInput('baselineFileNewName');
+        const baselineFileStorageReponame = tl.getInput('baselineFileStorageReponame');
+        const baselineFileAccessToken = tl.getInput('baselineFileAccessToken');
         const debug = tl.getInput('debug');
 
 
@@ -44,7 +49,7 @@ async function run() {
             console.log(' ')
             console.log('Debug Output Start')
             console.log('===================')
-            console.log('File to scan: '+inputString+' - API ID: '+apiid+' - API Key: '+apikey+' - Policy Name: '+policyName+' - Baseline file: '+baseLineFile+' - Additional Flags: '+additionalFlags+' - Break Pipeline: '+breakPipeline+' - Debug: '+debug+' - baselineFileGeneration: '+baselineFileGeneration+' - baselineFileStorageProject:'+baselineFileStorageProject+' - baselineFileStorageBranch: '+baselineFileStorageBranch+' - baselineFileNewNameOptions: '+baselineFileNewNameOptions+' - baselineFileNewName: '+baselineFileNewName)
+            console.log('File to scan: '+inputString+' - API ID: '+apiid+' - API Key: '+apikey+' - Policy Name: '+policyName+' - Baseline file: '+baseLineFile+' - Additional Flags: '+additionalFlags+' - Break Pipeline: '+breakPipeline+' - Debug: '+debug+' - baselineFileGeneration: '+baselineFileGeneration+' - baselineFileStorageProject:'+baselineFileStorageProject+' - baselineFileStorageBranch: '+baselineFileStorageBranch+' - baselineFileOptions: '+baselineFileOptions+' - baselineFileNewName: '+baselineFileNewName)
             console.log('=================')
             console.log('Debug Output End')
             console.log(' ')
@@ -96,6 +101,14 @@ async function run() {
                 const baseLineFileParam = ' '
             }
 
+        }
+
+        if (baselineFileGeneration == 'true') {
+
+            if ( typeof baselineFileStorageProject == 'undefined' || typeof baselineFileStorageBranch == 'undefined' || typeof baselineFileOptions == 'undefined' || typeof baselineFileStorageReponame == 'undefined') {
+                tl.setResult(tl.TaskResult.Failed, 'ERROR: Not all required paramters to store the baseline file are defined');
+                return;
+            }
         }
 
 
@@ -175,7 +188,6 @@ async function run() {
 
 
         //create output HTML file
-
         const outputFileName = __dirname+'/pipeline_results.html';
         var rawdata = fs.readFileSync("filtered_results.json");
         var results = JSON.parse(rawdata);
@@ -206,91 +218,154 @@ async function run() {
 
         //If baseline file generation is true store the baseline file to specified location
         if (baselineFileGeneration == 'true') {
-            //store the baseline file somewhere
+
+            //set the correct filename
+            let filename = 'pipeline.jsonf'
+            if ( baselineFileOptions == 'filtered' ) {
+                filename = 'filtered_results.json'
+            }
+
+
+            let orgUrl:string = tl.getVariable('SYSTEM_TEAMFOUNDATIONSERVERURI')
+            let repostories:GitRepository[];            
+            let token:string = tl.getVariable('System.AccessToken')
+            let project:string = baselineFileStorageProject
+            let repostoryName = baselineFileStorageReponame;
+            let authHandler = azdev.getPersonalAccessTokenHandler(token);
+            let connection = new azdev.WebApi(orgUrl, authHandler);
+            let fileContent = fs.readFileSync(filename)
+            let file = fileContent.toString();
+            let refName:string = baselineFileStorageBranch;
+
             //Show debug
             if ( debug == 1){
                 console.log(' ')
                 console.log('Debug Output Start')
                 console.log('===================')
-                console.log('Baseline File Storage Project '+baselineFileStorageProject)
-                console.log('Baseline File Storag Branch '+baselineFileStorageBranch)
-                console.log('Baseline File Name Options '+baselineFileNewNameOptions)
-                console.log('Baseline File Name'+baselineFileNewName)
+                console.log('Baseline File Storage Project: '+baselineFileStorageProject)
+                console.log('Baseline File Storag Branch: '+baselineFileStorageBranch)
+                console.log('Baseline File Name Options: '+baselineFileOptions)
+                console.log('Baseline File Name: '+baselineFileNewName)
+                console.log('Org URL: '+orgUrl)
+                console.log('AuthHandler: '+JSON.stringify(authHandler))
+                console.log('Connection: '+JSON.stringify(connection))
+                console.log('File contnent: '+filename)
+                console.log('File contnent: '+file)
                 console.log('=================')
                 console.log('Debug Output End')
                 console.log(' ')
             }
 
-
+            let git:gitclient.IGitApi = await connection.getGitApi();
+            repostories = await git.getRepositories(project);
+            let gitrepo = repostories.find(element => element.name === repostoryName);
+            let repostoryId = gitrepo.id; 
             
-            let orgUrl = 'https://dev.azure.com/jtotzek'
-            let repostories:GitRepository[];            
-            let token: string = "ACCESS_TOKEN";//patToken 
-            let project:string = 'Verademo_YML'
-            let repostoryName = 'Verademo_YML';
-            let authHandler = azdev.getPersonalAccessTokenHandler(token);
-            console.log('AuthHandle: '+authHandler)
-            let connection = new azdev.WebApi(orgUrl, authHandler);
-            console.log('Connection: '+connection)
-            let file:string = __dirname+'filtered_results.json"';
-            let refName:string = 'refs/heads/development';
+            //set filename for storage
+            var newBaselineFilename = '/pipeline-baseline-file.json'
+            if ( typeof baselineFileNewName != 'undefined '){
+                newBaselineFilename = baselineFileNewName
+            }
+            
+            let repos = await git.getRefs(repostoryId,project);
+            let ref = repos.find(element => element.name === refName)
 
-            async function runPush(filePath:string,refName:string,project:string,repostoryName:string)
-            {  
-                let git:gitclient.IGitApi = await connection.getGitApi();
-                repostories = await git.getRepositories(project);
-                console.log('Repositories: '+repostories)
-                let gitrepo = repostories.find(element => element.name === repostoryName);
-                console.log('GitRepo: '+gitrepo)
+            //check if file exists on repo and branch
+            const newBranchName = refName.split("/")
+            const apiURL = orgUrl+project+'/_apis/git/repositories/'+repostoryId+'/items?scopepath='+newBaselineFilename+'&versionType=Branch&version='+newBranchName[2]+'&$format=json'
+            
+            const hash = Buffer.from(':'+token).toString("base64");
+            const Basic = "Basic " + hash;
 
-                /*
-                let repostoryId = gitrepo?.id;
-                let gitChanges:GitChange[] = [<GitChange>{
-                    changeType:1,
-                    newContent:<ItemContent>{content:base64str,contentType:0 }, //0-> RawText = 0, Base64Encoded = 1,
-                    item:<GitItem>{
-                        path:'/testUpdate.png'
-                    }
-                }];
-                if(typeof(repostoryId) ==="string")
-                {
-                let ref = (await git.getRefs(repostoryId,project)).find(element => element.name === refName)
+            try {
+                let fileExists = await Axios.request({
+                    method: 'GET',
+                    headers:{
+                        'Authorization': Basic,
+                    },
+                    url: apiURL
+                });
+                var fileExistsResponse=fileExists.data
+                var fileFound = fileExists.data.count
+            } catch (error) {
+                console.log(error);
+            }
+
+            var changeTypeValue = 1
+            if ( fileFound == '1' ){
+                changeTypeValue = 2
+            }
+            else {
+                changeTypeValue = 1
+            }
+
+            if ( debug == 1){
+                console.log(' ')
+                console.log('Debug Output Start')
+                console.log('===================')
+                console.log('git: '+JSON.stringify(git))
+                console.log('repostories: '+JSON.stringify(repostories))
+                console.log('gitrepo: '+JSON.stringify(gitrepo))
+                console.log('repostoryId: '+repostoryId)
+                console.log('repos: '+JSON.stringify(repos))
+                console.log('ref: '+JSON.stringify(ref))
+                console.log('File Check Response: '+JSON.stringify(fileExistsResponse))
+                console.log('fileFound: '+fileFound)
+                console.log('=================')
+                console.log('Debug Output End')
+                console.log(' ')
+            }
+
+            let gitChanges:GitChange[] = [<GitChange>{
+                changeType:changeTypeValue,
+                newContent:<ItemContent>{content:file,contentType:0 }, //0-> RawText = 0, Base64Encoded = 1,
+                item:<GitItem>{
+                    path:newBaselineFilename
+                }
+            }];
+            if(typeof(repostoryId) ==="string")
+            {
                 let refUpdates:GitRefUpdate[] = [<GitRefUpdate> {
-                    name:ref?.name,
-                    oldObjectId:ref?.objectId //get ref->object id
+                    name:ref.name,
+                    oldObjectId:ref.objectId //get ref->object id
                 }];
 
                 let gitCommitRef:GitCommitRef[] = [
                     <GitCommitRef>{
                         changes:gitChanges,
-                        comment:'Add a file'
+                        comment:'Veracode Pipeline Scan baseline file commit and push'
                     }
                 ]
+
                 let gitPush:GitPush = <GitPush>{
                     commits:gitCommitRef,
                     refUpdates:refUpdates,
                     repository:gitrepo
                 };
-                console.log(repostoryId)
-                await git.createPush(gitPush,repostoryId,project);
-
+                try {
+                    await git.createPush(gitPush,repostoryId,project);
                 }
-                */
-
+                catch (error){
+                    console.log(error);
+                }
+                
+                
+                //Show debug
+                if ( debug == 1){
+                    console.log(' ')
+                    console.log('Debug Output Start')
+                    console.log('===================')
+                    console.log('Repository ID: '+repostoryId)
+                    console.log('ref: '+JSON.stringify(ref))
+                    console.log('refUpdates: '+JSON.stringify(refUpdates))
+                    console.log('gitCommitRef: '+JSON.stringify(gitCommitRef))
+                    console.log('gitPush: '+JSON.stringify(gitPush))
+                    console.log('git: '+JSON.stringify(git))
+                    console.log('=================')
+                    console.log('Debug Output End')
+                    console.log(' ')
+                }
             }
-            runPush(file,refName,project,repostoryName);
-
-
-
-
-
-
-
-
-
-
-
-
         }
 
 

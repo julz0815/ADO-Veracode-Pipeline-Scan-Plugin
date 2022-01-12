@@ -1,6 +1,6 @@
 {
   "name": "VeracodePipelineScanFeature",
-  "version": "0.1.19",
+  "version": "0.1.158",
   "description": "An extension which lets you run Veracode's pipeline scan and publish resulsts as a seperate tab.",
   "scripts": {
     "build": "tsc -p .",

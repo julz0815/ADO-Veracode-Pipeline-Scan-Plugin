@@ -1,9 +1,9 @@
 {
     "manifestVersion": 1,
     "id": "VeracodePipelineScanFeature",
-    "version": "0.1.19",
+    "version": "0.1.158",
     "name": "Veracode Pipeline Scan - Feature",
-    "description": "An extension which lets you run Veracode's pipeline scan and publish resulsts as a seperate tab. ",
+    "description": "An extension which lets you run Veracode's pipeline scan and publish results as a seperate tab. ",
     "publisher": "JulianTotzek-Hallhuber",
     "public": false,
     "content": {

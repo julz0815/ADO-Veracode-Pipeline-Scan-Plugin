@@ -1,6 +1,6 @@
 {
   "name": "VeracodePipelineScanFeature",
-  "version": "0.1.19",
+  "version": "0.1.158",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.24.0",
     "azure-devops-node-api": "^11.1.0",
     "azure-pipelines-task-lib": "^3.0.6-preview.0"
   },
