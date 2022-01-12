@@ -64,7 +64,7 @@ The two options are
   
 **IMPORTANT NOTE** 
 The user that runs the baseline file storage action needs the Git 'GenericContribute' permission to perform this action.  
-![](/images/Permissions_config.png)  
+![](/images/Permissions_Config.png)  
 **IMPORTANT NOTE** 
   
 Example
