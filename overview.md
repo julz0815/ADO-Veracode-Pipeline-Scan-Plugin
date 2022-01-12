@@ -4,7 +4,7 @@ In addition it will populate an additional tab on your pipeline run to display r
 The plugin will automatically update itself every night if a new version of the piepline scan jar is published.  
   
 
-Please reference the Veracode Help Ceneter for furhter information.  
+Please reference the Veracode Help Ceneter for further information.  
 https://help.veracode.com/r/c_about_pipeline_scan  
 
 The Veracode pipeline scan is desgined as a fast feedback tool for developers and will not exchange the Veracode Sandbox or Policy scan for static analysis
@@ -38,12 +38,13 @@ Example
     VeracodeAPISecret: '$(vkey)'  
     fileToScan: '$(System.DefaultWorkingDirectory)/target/verademo.war'  
 ```    
-The values you see here are also presets of the plugin and need to be adjust to fit your environment and application architecture.  
+The values you see here are also presets of the plugin and need to be adjusted to fit your environment and application architecture.  
 ![](/images/Standard_Config.png)  
 
 ### 3. Publish the pipeline scan report on ypur Azure DevOps pipeline summery.
 The plugin will automatically create a report on your Azure DevOps pipeline summery page for better review.  
-  
+![](/images/Results_Overview.png)  
+    
 ### 4. Working with Pipeline Scan baseline file  
 From version 1.x the plugin supports the generation and storage of a new baseline file.  
 There are a few options to be set to work properly.  
@@ -60,7 +61,7 @@ The two options are
 - filtered - filtered results  
   
 **Standard** will simply use all results found from the pipeline scan.  
-**Filtered** will use the filtered results. For example if you want to fail on severity, CWE or simialr. Only these results will be used to generate the new baseline file. This is default option.    
+**Filtered** will use the filtered results. For example if you want to fail on severity, CWE or simialr. Only these results will be used to generate the new baseline file. This is the default option.    
   
 **IMPORTANT NOTE**  
 The user that runs the baseline file storage action needs the Git 'GenericContribute' permission to perform this action.  
@@ -82,7 +83,7 @@ Example
 ```
   
 Also make sure you don't run the pipeline again when the baseline file is pushed to your branch. Otherwise you will start to run a loop   
-The yml part for that may looks like this:  
+The yml part for that may looks like the following yml example. For the exclude use the filename you specify as your baseline file on the above configuration.    
 Example
 ```
 trigger:
