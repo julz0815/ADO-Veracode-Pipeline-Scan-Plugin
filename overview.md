@@ -63,7 +63,8 @@ The two options are
 **Filtered** will use the filtered results. For example if you want to fail on severity, CWE or simialr. Only these results will be used to generate the new baseline file. This is default option.    
   
 **IMPORTANT NOTE**  
-You need the Git 'GenericContribute' permission to perform this action.   
+The user that runs the baseline file storage action needs the Git 'GenericContribute' permission to perform this action.  
+![](/images/Permissions_config.png)  
 **IMPORTANT NOTE**  
   
 Example
