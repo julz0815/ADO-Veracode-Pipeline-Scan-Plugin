@@ -70,7 +70,7 @@ The user that runs the baseline file storage action needs the Git 'GenericContri
   
 Example
 ```
-- task: VeracodePipelineScanFeature@0
+- task: VeracodePipelineScan@0
   inputs:
     VeracodeAPIID: '$(vid)'
     VeracodeAPIsecret: '$(vkey)'

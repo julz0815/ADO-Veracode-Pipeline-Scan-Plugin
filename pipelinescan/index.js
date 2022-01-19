@@ -183,7 +183,7 @@ async function run() {
         //If baseline file generation is true store the baseline file to specified location
         if (baselineFileGeneration == 'true') {
             //set the correct filename
-            let filename = 'pipeline.jsonf';
+            let filename = 'pipeline.json';
             if (baselineFileOptions == 'filtered') {
                 filename = 'filtered_results.json';
             }
@@ -243,7 +243,7 @@ async function run() {
                 var fileFound = fileExists.data.count;
             }
             catch (error) {
-                console.log(error);
+                console.log('API check-file call error: ' + error);
             }
             var changeTypeValue = 1;
             if (fileFound == '1') {
@@ -295,7 +295,7 @@ async function run() {
                     await git.createPush(gitPush, repostoryId, project);
                 }
                 catch (error) {
-                    console.log(error);
+                    console.log('CreatePush Error: ' + error);
                 }
                 //Show debug
                 if (debug == 1) {

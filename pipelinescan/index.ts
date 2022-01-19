@@ -220,7 +220,7 @@ async function run() {
         if (baselineFileGeneration == 'true') {
 
             //set the correct filename
-            let filename = 'pipeline.jsonf'
+            let filename = 'pipeline.json'
             if ( baselineFileOptions == 'filtered' ) {
                 filename = 'filtered_results.json'
             }
@@ -288,7 +288,7 @@ async function run() {
                 var fileExistsResponse=fileExists.data
                 var fileFound = fileExists.data.count
             } catch (error) {
-                console.log(error);
+                console.log('API check-file call error: '+error);
             }
 
             var changeTypeValue = 1
@@ -346,7 +346,7 @@ async function run() {
                     await git.createPush(gitPush,repostoryId,project);
                 }
                 catch (error){
-                    console.log(error);
+                    console.log('CreatePush Error: '+error);
                 }
                 
                 
