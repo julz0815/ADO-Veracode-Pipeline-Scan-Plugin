@@ -154,7 +154,7 @@ async function run() {
         console.log("Pipeline command: " + pipelineScanCommand);
         let commandOutput;
         try {
-            commandOutput = child_process_1.execSync(pipelineScanCommand);
+            commandOutput = (0, child_process_1.execSync)(pipelineScanCommand);
         }
         catch (ex) {
             console.log(ex.stdout.toString());
