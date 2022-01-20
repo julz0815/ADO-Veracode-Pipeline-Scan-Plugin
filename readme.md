@@ -84,6 +84,7 @@ Example
   
 ![](/images/Baseline_Config.png)  
   
+  
 Also make sure you don't run the pipeline again when the baseline file is pushed to your branch. Otherwise you will start to run a loop   
 The yml part for that may looks like the following yml example. For the exclude use the filename you specify as your baseline file on the above configuration.    
 Example
