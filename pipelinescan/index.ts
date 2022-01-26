@@ -39,6 +39,7 @@ async function run() {
         const debug = tl.getInput('debug');
 
 
+        
         //var getEnvChildProcess = require("child_process");
         //const getEnvOutput = getEnvChildProcess.execSync('env').toString();
         //console.log(getEnvOutput)
