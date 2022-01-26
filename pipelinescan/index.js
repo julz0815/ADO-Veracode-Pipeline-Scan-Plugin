@@ -42,8 +42,8 @@ async function run() {
         const baselineFileStorageReponame = tl.getInput('baselineFileStorageReponame');
         const baselineFileAccessToken = tl.getInput('baselineFileAccessToken');
         const debug = tl.getInput('debug');
-        var getEnvChildProcess = require("child_process");
-        const getEnvOutput = getEnvChildProcess.execSync('env').toString();
+        //var getEnvChildProcess = require("child_process");
+        //const getEnvOutput = getEnvChildProcess.execSync('env').toString();
         //console.log(getEnvOutput)
         //Show debug
         if (debug == 1) {
