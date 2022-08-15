@@ -89,17 +89,18 @@ async function run() {
             policyFileParam = ' --policy_file "'+fileNameString+'"'
         }
 
+        var baseLineFileParam = ""
         if ( typeof baseLineFile !== 'undefined' ){
             //find the specified baselinefile
             const path = baseLineFile
 
             if (fs.existsSync(path)) {
                 console.log('Baseline file '+baseLineFile+' exisits')
-                const baseLineFileParam = ' -bf '+baseLineFile
+                baseLineFileParam = ' -bf '+baseLineFile
             }
             else {
                 console.log('Baseline file "'+baseLineFile+'" is specified as parameter, but does not exisit, will be skipped.')
-                const baseLineFileParam = ' '
+                baseLineFileParam = ' '
             }
 
         }
@@ -153,6 +154,22 @@ async function run() {
             //to correctly work, bad param checks is disabled for now.
             //pipelineScanCommandString3=' '+newAdditionalFlags
         }
+
+        //Show debug
+        if ( debug == 1){
+            console.log(' ')
+            console.log('Debug Output Start')
+            console.log('===================')
+            console.log('Pipeline Scan Command String 1: '+pipelineScanCommandString1)
+            console.log('Pipeline Scan Command String 1: '+pipelineScanCommandString2)
+            console.log('Pipeline Scan Command String 1: '+pipelineScanCommandString3)
+            console.log('=================')
+            console.log('Debug Output End')
+            console.log(' ')
+        }
+
+
+
 
         const pipelineScanCommandString = pipelineScanCommandString1+pipelineScanCommandString2+pipelineScanCommandString3
         console.log('Parameter String: '+pipelineScanCommandString)
