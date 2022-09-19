@@ -112,16 +112,24 @@ async function run() {
             //all parameters
             const allParameters = ['-h', '-v', '-f', '-prof', '-vkey', '-vid', '-fs fail_on_severity', '-fc fail_on_cwe', '-bf', '-t', '-id', '-sd', '-jd', '-so', '-sf', '-jo', '-jf', '-p', '-u', '-r', '-aid', '-ds', '-gig', '-gvg', '-fjf', '-pn', '-pf', '-rp', '-V', '--file', '--request_policy', '--veracode_profile', '--veracode_api_id', '--veracode_api_key', '--fail_on_severity', '--fail_on_cwe', '--baseline_file', '--policy_name', '--policy_file', '--timeout', '--issue_details', '--summary_display', '--json_display', '--verbose', '--summary_output', '--summary_output_file', '--json_output', '--json_output_file', '--filtered_json_output_file', '--gl_issue_generation', '--gl_vulnerability_generation', '--project_name', '--project_url', '--project_ref', '--app_id', '--development_stage', '--help', '--version'];
             const allParametersLength = allParameters.length;
-            //replace quotes to single quotes
-            var repalcedAdditionalFlags = additionalFlags.replace(/"/g, "'");
-            repalcedAdditionalFlags = repalcedAdditionalFlags.replace(/“/g, "'");
-            repalcedAdditionalFlags = repalcedAdditionalFlags.replace(/“/g, "'");
-            repalcedAdditionalFlags = repalcedAdditionalFlags.replace(/„/g, "'");
-            repalcedAdditionalFlags = repalcedAdditionalFlags.replace(/´/g, "'");
-            repalcedAdditionalFlags = repalcedAdditionalFlags.replace(/`/g, "'");
+            //replace quotes to double quotes
+            var repalcedAdditionalFlags = additionalFlags.replace(/"/g, "\"");
+            repalcedAdditionalFlags = repalcedAdditionalFlags.replace(/“/g, "\"");
+            repalcedAdditionalFlags = repalcedAdditionalFlags.replace(/“/g, "\"");
+            repalcedAdditionalFlags = repalcedAdditionalFlags.replace(/„/g, "\"");
+            repalcedAdditionalFlags = repalcedAdditionalFlags.replace(/´/g, "\"");
+            repalcedAdditionalFlags = repalcedAdditionalFlags.replace(/`/g, "\"");
             //const splitRegEx = /((^-|^--)[\a-zA-Z\_]+\s(\'[a-zA-Z0-9\/:\._\-\s]+\'))/g
             //const splitRegEx = /((^-|^--)[\a-zA-Z\_]+)/;
             //const splitRegEx = /(-|--)/g;
+            /* old code
+            var repalcedAdditionalFlags = additionalFlags.replace(/"/g,"'")
+            repalcedAdditionalFlags = repalcedAdditionalFlags.replace(/“/g,"'")
+            repalcedAdditionalFlags = repalcedAdditionalFlags.replace(/“/g,"'")
+            repalcedAdditionalFlags = repalcedAdditionalFlags.replace(/„/g,"'")
+            repalcedAdditionalFlags = repalcedAdditionalFlags.replace(/´/g,"'")
+            repalcedAdditionalFlags = repalcedAdditionalFlags.replace(/`/g,"'")
+            old code */
         }
         //create pipeline scan command string
         var pipelineScanCommandString1 = '';
