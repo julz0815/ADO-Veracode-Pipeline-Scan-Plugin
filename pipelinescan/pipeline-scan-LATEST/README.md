@@ -49,6 +49,9 @@ The tool will need some information passed to it as command line arguments (many
   * `--policy_file <previously downloaded policy file>`
   * `--timeout <minutes>`
     * Report scan as unsuccessful if it does not complete scanning in the given number of minutes. Defaults to `60` minutes.
+  * `--include <module name regular expression>`
+    * Enter a case-sensitive, comma-separated list of name patterns that represent the names of the modules to scan as top-level modules. Veracode identifies these modules during prescan. The * wildcard matches zero or more characters. The ? wildcard matches exactly one character. For example, to include various module names that contain module: --include "module 1, module-*, module2.jar"
+      The scan results show the names of the modules that Veracode identified and the modules included in the scan. This parameter does not pause, stop, or impact the performance of your pipeline.
 
 There are two ways of providing Veracode API credentials to the Pipeline Scan CI tool: 
 * Passing command line arguments `--veracode_api_id <id>` and `--veracode_api_key <key>` directly. This method takes precedence over credentials file.
@@ -118,22 +121,66 @@ The default settings (supplying only the upload file, and valid credentials from
 ### Logging
 
 * `--verbose` adds detailed console output during scanning.
-* Standard `log4j.properties` can be used to configure the logging, and will override any command line options.
-  * Example: to output normally to console and output verbose/debug messages to a file:
+* The default log configuration included in the pipeline-scan jar package only log to the console. Configuration of Log4j 2 can be accomplished in 1 of 3 ways to customize additional logging functions (including writing to a log file), these approaches will override any command line options:
+  * Through configuration file `pipeline.scan.log4j2.properties`
+    * Example using `pipeline.scan.log4j2.properties`: to output normally to console and output verbose/debug messages to a file (Note: when you want to turn on debug for console as well, set `logger.file.additivity` to `true` :
+      ```properties
+      # Extra logging related to initialization of Log4j
+      # Set to debug or trace if log4j initialization is failing
+      status = warn
+      # Name of the configuration
+      name = ConsoleLogForPipelineScan
+      # Define the output file, e.g. logs/pipeline-scan.log, pipeline-scan.log
+      property.filename = pipeline-scan.log
+  
+      # Console appender configuration
+      appender.console.type = Console
+      appender.console.name = consoleLogger
+      appender.console.layout.type = PatternLayout
+      appender.console.layout.pattern = [%d{dd MMM yyyy HH:mm:ss,SSSS}] PIPELINE-SCAN %p: %m %n
+    
+      # File appender configuration
+      appender.file.type = File
+      appender.file.name = fileLogger
+      appender.file.fileName = ${filename}
+      appender.file.layout.type = PatternLayout
+      appender.file.layout.pattern = [%d{dd MMM yyyy HH:mm:ss,SSSS}] PIPELINE-SCAN %p: %m %n
+    
+      logger.file.name=PIPELINE_SCAN
+      logger.file.level = debug
+      logger.file.additivity = false
+      logger.file.appenderRef.file.ref = fileLogger
+    
+      rootLogger.level = info
+      rootLogger.appenderRef.stdout.ref = consoleLogger
+      ```
+  * Through configuration file `log4j2.xml`, you will need to specify command line option `-Dlog4j.configurationFile=[path-to]/log4j2.xml` when running pipeline-scan:
+    * Example using `log4j2.xml`: to output normally to console and output verbose/debug messages to a file (Note: when you want to turn on debug for console as well, set `logger.file.additivity` to `true` :
     ```properties
-    log4j.rootLogger=INFO, stdout, fileout
-    
-    log4j.appender.stdout=org.apache.log4j.ConsoleAppender
-    log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
-    log4j.appender.stdout.layout.ConversionPattern=[%d{HH:mm:ss,SSSS}] %p: %m%n
-    
-    log4j.appender.fileout=org.apache.log4j.FileAppender
-    log4j.appender.fileout.file=pipeline-scan.log
-    log4j.appender.fileout.append=false
-    log4j.appender.fileout.threshold=DEBUG
-    log4j.appender.fileout.layout=org.apache.log4j.PatternLayout
-    log4j.appender.fileout.layout.ConversionPattern=[%d{dd MMM yyyy HH:mm:ss,SSSS}] PIPELINE-SCAN %p: %m%n
+    <?xml version="1.0" encoding="UTF-8"?>
+    <Configuration status="WARN">
+        <Appenders>
+            <Console name="Console" target="SYSTEM_OUT">
+                <PatternLayout pattern="%d{HH:mm:ss.SSS} %-5level - %msg%n"/>
+            </Console>
+            <File name="File" fileName="pipeline-scan.log" append="true">
+                <PatternLayout>
+                    <Pattern>%d{HH:mm:ss.SSS} [%t] %-5level - %msg%n</Pattern>
+                </PatternLayout>
+            </File>
+        </Appenders>
+        <Loggers>
+            <Logger name="PIPELINE_SCAN" level="debug" additivity="false">
+                <AppenderRef ref="File"/>
+            </Logger>
+            <Root level="info">
+                <AppenderRef ref="Console"/>
+            </Root>
+        </Loggers>
+    </Configuration>
     ```
+  * Through any configuration file you create with any name: 
+    * To use your own logging configuration file (either a .properties or .xml file), you will need to specify command line option `-Dlog4j.configurationFile=[path-to-config-file]` when running pipeline-scan. 
 
 ### Notes
 
@@ -1236,7 +1283,9 @@ Scan Configuration:
   -bf BASELINE_FILE, --baseline_file BASELINE_FILE
                          Provide the baseline file.
   -t TIMEOUT, --timeout TIMEOUT
-                         User timeout from CI tool. (default: 60)						 
+                         User timeout from CI tool. (default: 60)		
+  -i FILENAMES, --include FILENAMES
+                         Enter a case-sensitive, comma-separated list of name patterns that represent the names of the modules to scan as top-level modules.  Veracode identifies these modules during prescan. The * wildcard matches zero or more characters. The ? wildcard matches exactly one character. For example, to include various module names that contain module: --include "module 1, module-*, module2.jar". The scan results show the names of the modules that Veracode identified and the modules included in the scan. This parameter does not pause, stop, or impact the performance of your pipeline.				 
 
 Results Display:
   -id {true,false}, --issue_details {true,false}
