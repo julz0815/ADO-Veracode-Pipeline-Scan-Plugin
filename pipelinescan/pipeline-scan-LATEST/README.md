@@ -49,6 +49,9 @@ The tool will need some information passed to it as command line arguments (many
   * `--policy_file <previously downloaded policy file>`
   * `--timeout <minutes>`
     * Report scan as unsuccessful if it does not complete scanning in the given number of minutes. Defaults to `60` minutes.
+  * `--include <module name regular expression>`
+    * Enter a case-sensitive, comma-separated list of name patterns that represent the names of the modules to scan as top-level modules. Veracode identifies these modules during prescan. The * wildcard matches zero or more characters. The ? wildcard matches exactly one character. For example, to include various module names that contain module: --include "module 1, module-*, module2.jar"
+      The scan results show the names of the modules that Veracode identified and the modules included in the scan. This parameter does not pause, stop, or impact the performance of your pipeline.
 
 There are two ways of providing Veracode API credentials to the Pipeline Scan CI tool: 
 * Passing command line arguments `--veracode_api_id <id>` and `--veracode_api_key <key>` directly. This method takes precedence over credentials file.
@@ -1236,7 +1239,9 @@ Scan Configuration:
   -bf BASELINE_FILE, --baseline_file BASELINE_FILE
                          Provide the baseline file.
   -t TIMEOUT, --timeout TIMEOUT
-                         User timeout from CI tool. (default: 60)						 
+                         User timeout from CI tool. (default: 60)			
+  -i FILENAMES, --include FILENAMES
+                         Enter a case-sensitive, comma-separated list of name patterns that represent the names of the modules to scan as top-level modules.  Veracode identifies these modules during prescan. The * wildcard matches zero or more characters. The ? wildcard matches exactly one character. For example, to include various module names that contain module: --include "module 1, module-*, module2.jar". The scan results show the names of the modules that Veracode identified and the modules included in the scan. This parameter does not pause, stop, or impact the performance of your pipeline.				 
 
 Results Display:
   -id {true,false}, --issue_details {true,false}
